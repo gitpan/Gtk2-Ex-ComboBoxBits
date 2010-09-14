@@ -1,0 +1,53 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.63.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 842745cb706f8f2126506f544492f7a80dbe29b3 COPYING
+SHA1 09adfdd87521ed134642a513ffbaffd0397dded7 Changes
+SHA1 195e59268a76b17104a00e8b7c31c2ec8d664182 MANIFEST
+SHA1 e6e7c2904ea5d300c0ddf70fc5a80f5005229aa9 MANIFEST.SKIP
+SHA1 121a15ec2e8866b497b4765349d27d530d9947da META.yml
+SHA1 5353cb21f7ce66ac6a08b87ff8bb72fa4c2d9e14 Makefile.PL
+SHA1 ce8363276d9b8a8ddf298d6a8726d5f75b12efdd debian/changelog
+SHA1 ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 debian/compat
+SHA1 62a3403657f662dbf039a5095d12b6ab3239822d debian/control
+SHA1 d71bde5867856ba326f696421209d742234b09a6 debian/copyright
+SHA1 85f28ce6d58e45775ee87430e0118760cce0d454 debian/rules
+SHA1 61652cd1568dcf2614df833eba241755eee34e89 debian/source/format
+SHA1 12a6576f2d7f5727007fcd8820a9ef146fe591be debian/watch
+SHA1 46c3c1011dfedf8d4b3977f1f8ca6bf35018ee95 devel/enum.pl
+SHA1 f866b99f6db06943bf0071747da4eda50254393e examples/text-builder.pl
+SHA1 78799545010992cffca900fc4e2e96667e069b54 inc/MyMakeMakerExtras.pm
+SHA1 692a1ddc2ca6b98cac7b48ea40bc1ac1509e8ed9 inc/my_pod2html
+SHA1 4f9be3b4065c1b6ca524bb1ccb68a3483b7ca668 lib/Gtk2/Ex/ComboBox/Enum.pm
+SHA1 b71000c2e1d0ad5e6da721cd4c67c11b309fa1ee lib/Gtk2/Ex/ComboBox/Text.pm
+SHA1 33ed5f9e411ce1d6a0379bb5e415f626827b5363 lib/Gtk2/Ex/ComboBoxBits.pm
+SHA1 9127f78a0dfa04976acbb979dd7862ef59a74c58 t/0-META-read.t
+SHA1 37abd43b41068804ea4bb099fdd89af21be82926 t/0-Test-DistManifest.t
+SHA1 8f93fb4c8f0424a4442cc93c9a2e86342ef55281 t/0-Test-Pod.t
+SHA1 1de8f07883f6bf1a2ef79f2cb8adf1deb3f61cee t/0-Test-Synopsis.t
+SHA1 fb517c2fae5ddac559318bf6a224949115ea3129 t/0-Test-YAML-Meta.t
+SHA1 b207c9d5f3bd1ac00f09b604f614288b1bcb2469 t/Enum-weaken.t
+SHA1 b3857138c2060ea8dab0b5e2f88648bd7baa8944 t/Enum.t
+SHA1 cc9d34bca6c40211dd6aa8fee844bb1a7f908461 t/MyTestHelpers.pm
+SHA1 06b321c36977d841dedc60d0e4afb7d59ce1bd6f t/Test/Weaken/ExtraBits.pm
+SHA1 3ec8c6ef1fe55399dc42cce34210a9b01c676708 t/Text.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iD8DBQFMj/0ILFMCIV9q3ToRAiaLAKCQuutTfEyj5nNvnI0RWhtS27G6bwCgoSdq
+KPG40b3WhS/rzrJSraQo/44=
+=YO3x
+-----END PGP SIGNATURE-----
