@@ -17,5 +17,8 @@ with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+Version 2, September 2010
+    - fix leftover unused List::MoreUtils
+
 Version 1, September 2010
     - the first version

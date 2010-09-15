@@ -22,7 +22,6 @@ use warnings;
 use Carp;
 use Gtk2;
 use Scalar::Util;
-use List::MoreUtils;
 use Glib::Ex::SignalBits;
 use Glib::Ex::EnumBits;
 use Gtk2::Ex::ComboBoxBits;
@@ -30,7 +29,7 @@ use Gtk2::Ex::ComboBoxBits;
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 1;
+our $VERSION = 2;
 
 use Glib::Object::Subclass
   'Gtk2::ComboBox',

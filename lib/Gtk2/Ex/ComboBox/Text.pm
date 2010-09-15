@@ -22,13 +22,12 @@ use warnings;
 use Carp;
 use Gtk2;
 use Scalar::Util;
-use List::MoreUtils;
 use Gtk2::Ex::ComboBoxBits 'set_active_text';
 
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 1;
+our $VERSION = 2;
 
 use Glib::Object::Subclass
   'Gtk2::ComboBox',

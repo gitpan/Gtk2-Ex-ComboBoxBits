@@ -39,7 +39,7 @@ plan tests => 14;
 #------------------------------------------------------------------------------
 # VERSION
 
-my $want_version = 1;
+my $want_version = 2;
 {
   is ($Gtk2::Ex::ComboBox::Text::VERSION,
       $want_version,
