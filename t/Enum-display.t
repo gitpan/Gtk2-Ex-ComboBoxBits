@@ -26,85 +26,58 @@ use lib 't';
 use MyTestHelpers;
 BEGIN { MyTestHelpers::nowarnings() }
 
-require Gtk2::Ex::ComboBox::Text;
+require Gtk2::Ex::ComboBox::Enum;
 
 require Gtk2;
 Gtk2->disable_setlocale;  # leave LC_NUMERIC alone for version nums
 Gtk2->init_check
   or plan skip_all => 'due to no DISPLAY available';
 
-plan tests => 14;
+plan tests => 8;
 
 
 #------------------------------------------------------------------------------
 # VERSION
 
-my $want_version = 2;
 {
-  is ($Gtk2::Ex::ComboBox::Text::VERSION,
-      $want_version,
-      'VERSION variable');
-  is (Gtk2::Ex::ComboBox::Text->VERSION,
-      $want_version,
-      'VERSION class method');
-
-  ok (eval { Gtk2::Ex::ComboBox::Text->VERSION($want_version); 1 },
-      "VERSION class check $want_version");
-  my $check_version = $want_version + 1000;
-  ok (! eval { Gtk2::Ex::ComboBox::Text->VERSION($check_version); 1 },
-      "VERSION class check $check_version");
-
-  my $combo = Gtk2::Ex::ComboBox::Text->new;
+  my $want_version = 3;
+  my $combo = Gtk2::Ex::ComboBox::Enum->new;
   is ($combo->VERSION,  $want_version, 'VERSION object method');
 
   ok (eval { $combo->VERSION($want_version); 1 },
       "VERSION object check $want_version");
+  my $check_version = $want_version + 1000;
   ok (! eval { $combo->VERSION($check_version); 1 },
       "VERSION object check $check_version");
 }
 
-
 #-----------------------------------------------------------------------------
 # notify
 
+Glib::Type->register_enum ('My::Test1', 'foo', 'bar-ski', 'quux');
+
 {
-  my $combo = Gtk2::Ex::ComboBox::Text->new (append_text => 'foo',
-                                             append_text => 'bar-ski',
-                                             append_text => 'quux');
+  my $combo = Gtk2::Ex::ComboBox::Enum->new (enum_type => 'My::Test1');
   my $saw_notify;
   $combo->signal_connect
-    ('notify::active-text' => sub {
-       $saw_notify = $combo->get('active-text');
+    ('notify::active-nick' => sub {
+       $saw_notify = $combo->get('active-nick');
      });
-  $combo->set (active_text => 'quux');
-  is ($combo->get('active-text'), 'quux', 'get() after set()');
-  is ($saw_notify, 'quux', 'notify from set("active_text")');
+  $combo->set (active_nick => 'quux');
+  is ($combo->get('active-nick'), 'quux', 'get() after set()');
+  is ($saw_notify, 'quux', 'notify from set("active_nick")');
 
   $combo->set_active (0);
-  is ($combo->get('active-text'), 'foo', 'get() after set_active()');
+  is ($combo->get('active-nick'), 'foo', 'get() after set_active()');
   is ($saw_notify, 'foo', 'notify from set_active()');
 }
 
 
 #-----------------------------------------------------------------------------
-# append/prepend
+# Scalar::Util::weaken
 
 {
-  my $combo = Gtk2::Ex::ComboBox::Text->new;
-  $combo->set (append_text => 'foo',
-               prepend_text => 'bar');
-  $combo->set_active (0);
-  is ($combo->get_active_text, 'bar', 'prepended bar');
-  $combo->set_active (1);
-  is ($combo->get_active_text, 'foo', 'appended foo');
-}
-
-
-#-----------------------------------------------------------------------------
-# weaken()
-
-{
-  my $combo = Gtk2::Ex::ComboBox::Text->new;
+  my $combo = Gtk2::Ex::ComboBox::Enum->new;
   require Scalar::Util;
   Scalar::Util::weaken ($combo);
   is ($combo, undef,'garbage collect when weakened');

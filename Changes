@@ -17,6 +17,9 @@ with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+Version 3, September 2010
+    - tests at least one not depending on DISPLAY
+
 Version 2, September 2010
     - fix leftover unused List::MoreUtils
 

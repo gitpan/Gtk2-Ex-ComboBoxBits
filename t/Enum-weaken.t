@@ -24,18 +24,22 @@ use Test::More;
 
 use lib 't';
 use MyTestHelpers;
+use Test::Weaken::ExtraBits;
 BEGIN { MyTestHelpers::nowarnings() }
 
 require Gtk2::Ex::ComboBox::Enum;
-
-# Test::Weaken 3 for "contents"
-eval "use Test::Weaken 3; 1"
-  or plan skip_all => "due to Test::Weaken 3 not available -- $@";
 
 require Gtk2;
 Gtk2->disable_setlocale;  # leave LC_NUMERIC alone for version nums
 Gtk2->init_check
   or plan skip_all => 'due to no DISPLAY available';
+
+# Test::Weaken 3 for "contents"
+eval "use Test::Weaken 3; 1"
+  or plan skip_all => "due to Test::Weaken 3 not available -- $@";
+
+eval "use Test::Weaken::Gtk2; 1"
+  or plan skip_all => "due to Test::Weaken::Gtk2 not available -- $@";
 
 plan tests => 1;
 
@@ -44,8 +48,6 @@ plan tests => 1;
 #   return ($ref == Gtk2::Ex::ComboBox::Enum->DEFAULT_MODEL);
 # }
 
-require Test::Weaken::Gtk2;
-require Test::Weaken::ExtraBits;
 
 {
   my $leaks = Test::Weaken::leaks

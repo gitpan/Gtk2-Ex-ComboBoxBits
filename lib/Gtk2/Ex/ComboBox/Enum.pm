@@ -29,7 +29,7 @@ use Gtk2::Ex::ComboBoxBits;
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 2;
+our $VERSION = 3;
 
 use Glib::Object::Subclass
   'Gtk2::ComboBox',
