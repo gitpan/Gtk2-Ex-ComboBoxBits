@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.63.
+signed via the Module::Signature module, version 0.66.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -15,31 +15,35 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 842745cb706f8f2126506f544492f7a80dbe29b3 COPYING
-SHA1 1339d12b9dfb0990c2ece115744348ecdd5c0e25 Changes
-SHA1 8b94a0b43fe18825e05c643281ec05deb1632ae0 MANIFEST
+SHA1 62b60dd143f00b9d7d95b9f811e45c3679228345 Changes
+SHA1 5ac907b2e90ddd94ee5c3401f9c629e24a58860d MANIFEST
 SHA1 e6e7c2904ea5d300c0ddf70fc5a80f5005229aa9 MANIFEST.SKIP
-SHA1 73a950e7c98db435a69001fc5b2823270b6cfc6f META.yml
-SHA1 5353cb21f7ce66ac6a08b87ff8bb72fa4c2d9e14 Makefile.PL
-SHA1 7fa275abfac0fc2771b0535113670ed6b30351d6 debian/changelog
+SHA1 3f8c3a17137b2ec4994bfc8b71a264b1be9a85b1 META.yml
+SHA1 81a88fd77ed8d9b8c93ecf151ebde709d8bf8724 Makefile.PL
+SHA1 d45bad2f4b1b098173ce48390fe6a7a336cd6455 debian/changelog
 SHA1 ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 debian/compat
-SHA1 62a3403657f662dbf039a5095d12b6ab3239822d debian/control
+SHA1 5f21d461dc7e989808f5e235c99713d514be39ba debian/control
 SHA1 d71bde5867856ba326f696421209d742234b09a6 debian/copyright
 SHA1 85f28ce6d58e45775ee87430e0118760cce0d454 debian/rules
 SHA1 61652cd1568dcf2614df833eba241755eee34e89 debian/source/format
 SHA1 12a6576f2d7f5727007fcd8820a9ef146fe591be debian/watch
-SHA1 46c3c1011dfedf8d4b3977f1f8ca6bf35018ee95 devel/enum.pl
+SHA1 471040fd34f1c48e9a6f1030940a59641db7df17 devel/builder-activetext.pl
+SHA1 579afdf951d1945a2a99a5163554be1ca77220ff devel/enum.pl
 SHA1 f866b99f6db06943bf0071747da4eda50254393e examples/text-builder.pl
 SHA1 3cf3345a9177dbe362dfc8fbf192272f4a611ca8 inc/MyMakeMakerExtras.pm
 SHA1 692a1ddc2ca6b98cac7b48ea40bc1ac1509e8ed9 inc/my_pod2html
-SHA1 1616ca1e1647b021880fe46ff42aa8f4225a4b2b lib/Gtk2/Ex/ComboBox/Enum.pm
-SHA1 50ca0affe2e09ad1d22d441fbf65a66feb207ec8 lib/Gtk2/Ex/ComboBox/Text.pm
-SHA1 61711fc6e5384f97c80efb42e65837133e63e8a7 lib/Gtk2/Ex/ComboBoxBits.pm
-SHA1 658622572a0844088abe0236ba3cabb109d16b65 t/Enum-display.t
+SHA1 d1739fa03f4245090281c60c76291614d60b6240 lib/Gtk2/Ex/ComboBox/Enum.pm
+SHA1 158289fa2afe4e0171d86bb6712a05c4cab824c1 lib/Gtk2/Ex/ComboBox/PixbufType.pm
+SHA1 8c4dffa62534ac337daa5fb4c764cce349e7cab3 lib/Gtk2/Ex/ComboBox/Text.pm
+SHA1 0297192fb2d257da23d1d6c4c8248df4443a952b lib/Gtk2/Ex/ComboBoxBits.pm
+SHA1 c241f0fe6715c8c6ca2e34b15f4d5c2f56b57e7d t/Enum-display.t
 SHA1 905546a36c07f288f1994c564d14bd4a1f6575c7 t/Enum-weaken.t
-SHA1 a41fe490a975cf2c4558c4b36242824538bfebcd t/Enum.t
+SHA1 2254e668d98d1995e2898980054c5e6d410cf8b7 t/Enum.t
 SHA1 5e5680b471811244fe93571efc23e7b6089cac3b t/MyTestHelpers.pm
+SHA1 71535d899099fc475fb01aa8a4b323003491c24f t/PixbufType-weaken.t
+SHA1 a71c2fb10f7aa4cc6b702981839df26493dab9cd t/PixbufType.t
 SHA1 06b321c36977d841dedc60d0e4afb7d59ce1bd6f t/Test/Weaken/ExtraBits.pm
-SHA1 3d31effd7d763f8e555e1c3c74533ffa13b53eb4 t/Text-display.t
+SHA1 6f23d479682e841ee3a1b2e1715c8877bf0316bf t/Text-display.t
 SHA1 9127f78a0dfa04976acbb979dd7862ef59a74c58 xt/0-META-read.t
 SHA1 37abd43b41068804ea4bb099fdd89af21be82926 xt/0-Test-DistManifest.t
 SHA1 8f93fb4c8f0424a4442cc93c9a2e86342ef55281 xt/0-Test-Pod.t
@@ -48,7 +52,7 @@ SHA1 fb517c2fae5ddac559318bf6a224949115ea3129 xt/0-Test-YAML-Meta.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 
-iD8DBQFMo7L6LFMCIV9q3ToRApjeAJ9hTd6N6sagIVhHvBXqKomEkCwZrQCcDNaf
-LKqNWRO3akyLmqwTUQzCgy8=
-=hDPJ
+iD8DBQFMw4J+LFMCIV9q3ToRAi43AJ0WgWS41rRA+mNHDqRxznGOUs3NxQCbBR6H
+mnxYyf49PrAnHLL/Z/2l/VA=
+=/9rI
 -----END PGP SIGNATURE-----

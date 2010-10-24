@@ -26,7 +26,7 @@ use MyMakeMakerExtras;
 
 MyMakeMakerExtras::WriteMakefile
   (NAME         => 'Gtk2-Ex-ComboBoxBits',
-   ABSTRACT     => 'Miscellaneous ComboBox things.',
+   ABSTRACT     => 'Some ComboBox things.',
    VERSION_FROM => 'lib/Gtk2/Ex/ComboBoxBits.pm',
    AUTHOR       => 'Kevin Ryde <user42@zip.com.au>',
    LICENSE      => 'gpl',
@@ -39,12 +39,16 @@ MyMakeMakerExtras::WriteMakefile
 
                     'Gtk2' => '1.220',
 
-                    'Glib::Ex::EnumBits' => 10, # new in version 10
+                    # my Glib-Ex-ObjectBits
+                    'Glib::Ex::SignalBits' => 9,  # new in version 9
+                    'Glib::Ex::EnumBits'   => 10, # new in version 10
                    },
 
    META_MERGE
    => { resources
-        => { homepage => 'http://user42.tuxfamily.org/gtk2-ex-comboboxbits/index.html' },
+        => { homepage
+             => 'http://user42.tuxfamily.org/gtk2-ex-comboboxbits/index.html',
+           },
         optional_features
         => { maximum_tests
              => { description => 'Have "make test" do as much as possible.',

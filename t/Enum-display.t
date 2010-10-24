@@ -40,7 +40,7 @@ plan tests => 8;
 # VERSION
 
 {
-  my $want_version = 3;
+  my $want_version = 4;
   my $combo = Gtk2::Ex::ComboBox::Enum->new;
   is ($combo->VERSION,  $want_version, 'VERSION object method');
 

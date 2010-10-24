@@ -17,6 +17,9 @@ with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+Version 4, October 2010
+    - new Gtk2::Ex::ComboBox::PixbufType
+
 Version 3, September 2010
     - tests at least one not depending on DISPLAY
 

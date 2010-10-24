@@ -1,0 +1,362 @@
+# Copyright 2010 Kevin Ryde
+
+# This file is part of Gtk2-Ex-ComboBoxBits.
+#
+# Gtk2-Ex-ComboBoxBits is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as published
+# by the Free Software Foundation; either version 3, or (at your option) any
+# later version.
+#
+# Gtk2-Ex-ComboBoxBits is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+# or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# for-pixbuf-save ?
+# insensitive or omit ?
+#                   Glib::ParamSpec->object
+#                   ('for-pixbuf-save',
+#                    'for-pixbuf-save',
+#                    'Blurb.',
+#                    'Gtk2::Gdk::Pixbuf',
+#                    Glib::G_PARAM_READWRITE),
+#   if ($pname eq 'for_pixbuf_save') {
+#     Scalar::Util::weaken ($self->{$pname});
+#   }
+#     my $pixbuf = $self->{'for_pixbuf_save'};
+# ,
+#              ($pixbuf ? ($pixbuf->get_width, $pixbuf->get_height) : ())
+
+# writable =>
+# exclude_read_only =>
+
+# type or active-type ?
+# active-format ?
+
+# $ptypecombo->order_first ('png', 'jpeg')
+# $ptypecombo->order_last ('ico')
+
+
+package Gtk2::Ex::ComboBox::PixbufType;
+use 5.008;
+use strict;
+use warnings;
+use Carp;
+use Gtk2;
+use Scalar::Util;
+use List::Util qw(max);
+use POSIX ();
+use Gtk2::Ex::ComboBoxBits;
+
+# uncomment this to run the ### lines
+#use Smart::Comments;
+
+our $VERSION = 27;
+
+if (0) {
+  # These are the type names as of Gtk 2.20, extend if there's more and
+  # want to translate their names.
+  #
+  # TRANSLATORS: These format names are localized in case a non-Latin script
+  # ought to be shown instead or as well.  Latin script languages will
+  # probably leave all unchanged since that will almost certainly make them
+  # easiest for the user identify, even if a literal translation would
+  # result in a different abbreviation.
+  __('ANI');
+  __('BMP');
+  __('GIF');
+  __('ICNS');
+  __('ICO');
+  __('JPEG');
+  __('JPEG2000');
+  __('PCX');
+  __('PNG');
+  __('PNM');
+  __('QTIF');
+  __('RAS');
+  __('SVG');
+  __('TGA');
+  __('TIFF');
+  __('WBMP');
+  __('WMF');
+  __('XBM');
+  __('XPM');
+}
+
+use Glib::Object::Subclass
+  'Gtk2::ComboBox',
+  signals => { notify => \&_do_notify },
+  properties => [ Glib::ParamSpec->string
+                  ('active-type',
+                   'active-type',
+                   'Gdk Pixbuf file save format, such as "png".',
+                   # FIXME: actual default is undef, when Perl-Gtk 1.240
+                   # supports that
+                   '',
+                   Glib::G_PARAM_READWRITE),
+
+                  Glib::ParamSpec->int
+                  ('for-width',
+                   'for-width',
+                   'Only show file formats which support this width.',
+                   0, POSIX::INT_MAX(),
+                   0,
+                   Glib::G_PARAM_READWRITE),
+                  Glib::ParamSpec->int
+                  ('for-height',
+                   'for-height',
+                   'Only show file formats which support this height.',
+                   0, POSIX::INT_MAX(),
+                   0,
+                   Glib::G_PARAM_READWRITE),
+
+                ];
+
+use constant { _COLUMN_TYPE    => 0,   # arg string for gdk_pixbuf_save()
+               _COLUMN_DISPLAY => 1,   # translated display string
+             };
+
+sub INIT_INSTANCE {
+  my ($self) = @_;
+
+  my $renderer = Gtk2::CellRendererText->new;
+  $renderer->set (ypad => 0);
+  $self->pack_start ($renderer, 1);
+  $self->set_attributes ($renderer, text => _COLUMN_DISPLAY);
+
+  $self->set_model (Gtk2::ListStore->new ('Glib::String', 'Glib::String'));
+  _update_model($self);
+}
+
+sub GET_PROPERTY {
+  my ($self, $pspec) = @_;
+  my $pname = $pspec->get_name;
+
+  if ($pname eq 'active_type') {
+    my $iter;
+    return (($iter = $self->get_active_iter)
+            && $self->get_model->get_value ($iter, _COLUMN_TYPE));
+  }
+  # $pname eq 'for_width' or 'for_height' integers
+  return $self->{$pname} || 0;
+}
+
+sub SET_PROPERTY {
+  my ($self, $pspec, $newval) = @_;
+  my $pname = $pspec->get_name;
+  ### ComboBox-PixbufType SET_PROPERTY: $pname
+
+  if ($pname eq 'active_type') {
+    # because _COLUMN_TYPE==0
+    Gtk2::Ex::ComboBoxBits::set_active_text ($self, $newval);
+  } else {
+    $self->{$pname} = $newval;
+    _update_model($self);
+  }
+}
+
+# 'notify' class closure
+sub _do_notify {
+  my ($self, $pspec) = @_;
+  if ($pspec->get_name eq 'active') {
+    $self->notify ('active-type');
+  }
+}
+
+# fallback enough for the formats examinations below, including the fallback
+# $is_writable_method
+my $get_formats_method
+  = (Gtk2::Gdk::Pixbuf->can('get_formats') # new in Gtk 2.2
+     ? 'get_formats'
+     : sub { return ({ name => 'png' },
+                     { name => 'jpeg' }) });
+
+my $is_writable_method
+  # is_writable() new in Gtk 2.2, and not wrapped until some time post
+  # Perl-Gtk 1.220
+  = (Gtk2::Gdk::PixbufFormat->can('is_writable')
+     ? 'is_writable'
+     : do {
+       my %writable = (png => 1,
+                       jpeg => 1, # Gtk 2.0 and 2.2
+
+                       (Gtk2->check_version(2,4,0)  # 2.4.0 for ico saving
+                        ? () : (ico => 1)),
+
+                       (Gtk2->check_version(2,8,0)  # 2.8.0 for bmp saving
+                        ? () : (bmp => 1)),
+
+                       (Gtk2->check_version(2,10,0) # 2.10.0 for tiff saving
+                        ? () : (tiff =>  1)),
+                      );
+       sub {
+         my ($format) = @_;
+         return $writable{$format->{'name'}};
+       }
+     });
+
+# ICO limited to 255x255.
+#
+# JPEG limited to 65500x65500.
+#
+# PNG spec is for sizes up to 2^31-1, per but libpng png_check_IHDR() has
+# a PNG_USER_WIDTH_MAX / PNG_USER_HEIGHT_MAX which default to 1_000_000,
+# and there's also a width restriction (2^32-1)/8-129 to fit RGBA rows in
+# memory for benefit of 32-bit systems presumably.  Could think about
+# enforcing that.
+#
+my %format_max_size = (ico  => 255,
+                       jpeg => 65500,
+                       png  => (2**31-1));
+
+sub _update_model {
+  my ($self) = @_;
+
+  my $size = max ($self->get('for-width'),
+                  $self->get('for-height'));
+  my @formats =
+    grep {$size <= ($format_max_size{$_->{'name'}} || $size)}
+      grep {$_->$is_writable_method}
+        Gtk2::Gdk::Pixbuf->$get_formats_method;
+
+  foreach my $format (@formats) {
+    $format->{'display'} = uc($format->{'name'});
+  }
+
+  # translated descriptions
+  if (eval { require Locale::Messages }) {
+    foreach my $format (@formats) {
+      $format->{'display'} = Locale::Messages::dgettext
+        ('Gtk2-Ex-ComboBoxBits', uc($format->{'display'}));
+    }
+  }
+
+  # alphabetical by translated description
+  @formats = sort { $a->{'display'} cmp $b->{'display'} } @formats;
+
+  my $type = $self->get('active-type');
+  my $model = $self->get_model;
+  $model->clear;
+  foreach my $format (@formats) {
+    ### display: $format->{'display'}
+    $model->set ($model->append,
+                 _COLUMN_TYPE,    $format->{'name'},
+                 _COLUMN_DISPLAY, $format->{'display'});
+  }
+
+  # preserve existing setting
+  $self->set (active_type => $type);
+}
+
+1;
+__END__
+
+=for stopwords Gtk Gtk2 Perl-Gtk combobox ComboBox Gdk Pixbuf Gtk
+writability png jpeg ico bmp programmatically
+
+=head1 NAME
+
+Gtk2::Ex::ComboBox::PixbufType -- combobox for Gdk Pixbuf file format types
+
+=head1 SYNOPSIS
+
+ use Gtk2::Ex::ComboBox::PixbufType;
+ my $ptypecombo = Gtk2::Ex::ComboBox::PixbufType->new;
+
+=head1 WIDGET HIERARCHY
+
+C<Gtk2::Ex::ComboBox::PixbufType> is a subclass of
+C<Gtk2::ComboBox>,
+
+    Gtk2::Widget
+      Gtk2::Container
+        Gtk2::Bin
+          Gtk2::ComboBox
+            Gtk2::Ex::ComboBox::PixbufType
+
+=head1 DESCRIPTION
+
+A C<PixbufType> combobox displays file format types available for
+C<Gtk2::Gdk::Pixbuf>.
+
+The C<active-type> property is the type displayed and updated with the
+user's selection.
+
+Currently the types shown are the writable formats in alphabetical order.
+Writability is checked in C<Gtk2::Gdk::PixbufFormat> under new enough
+Perl-Gtk2 (some time post 1.220), or for older Perl-Gtk2 there's a
+hard-coded list of "png", "jpeg", "tiff", "ico" and "bmp" (less any not
+applicable under an older Gtk).
+
+=head1 FUNCTIONS
+
+=over 4
+
+=item C<< $ptypecombo = Gtk2::Ex::ComboBox::PixbufType->new (key=>value,...) >>
+
+Create and return a new combobox object.  Optional key/value pairs set
+initial properties as per C<< Glib::Object->new >>.  For example,
+
+ my $ptypecombo = Gtk2::Ex::ComboBox::PixbufType->new
+                    (active_type => 'png');
+
+=back
+
+=head1 PROPERTIES
+
+=over 4
+
+=item C<active-type> (string or C<undef>, default C<undef>)
+
+The format type selected in the ComboBox.  This is the user's combobox
+choice, or setting it programmatically changes that choice.
+
+The value is a format type name string such as "png", as in the C<name>
+field of C<Gtk2::Gdk::PixbufFormat> and as taken by C<< $pixbuf->save >>.
+
+There's no default for C<active-type>, just as there's no default for the
+ComboBox C<active>.  When creating a PixbufType combobox a desired initial
+selection can be set.  "png" or "jpeg" are always available.
+
+=item C<for-width> (integer 0 up, default 0)
+
+=item C<for-height> (integer 0 up, default 0)
+
+Show only those file format types which support an image of this size.  For
+example "ico" format only goes up to 255x255, so if C<for-width> and
+C<for-height> are 300x150 then ico is not offered.  The default size 0 means
+no size restriction.
+
+=back
+
+=head1 SEE ALSO
+
+L<Gtk2::ComboBox>,
+L<Gtk2::Ex::ComboBox::Enum>
+
+=head1 HOME PAGE
+
+L<http://user42.tuxfamily.org/gtk2-ex-comboboxbits/index.html>
+
+=head1 LICENSE
+
+Copyright 2010 Kevin Ryde
+
+Gtk2-Ex-ComboBoxBits is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 3, or (at your option) any later
+version.
+
+Gtk2-Ex-ComboBoxBits is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU General Public License along with
+Gtk2-Ex-ComboBoxBits.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut
