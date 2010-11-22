@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Gtk2-Ex-ComboBoxBits
-version:            4
+version:            5
 abstract:           Some ComboBox things.
 author:
     - Kevin Ryde <user42@zip.com.au>

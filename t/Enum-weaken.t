@@ -17,6 +17,10 @@
 # You should have received a copy of the GNU General Public License along
 # with Gtk2-Ex-WidgetBits.  If not, see <http://www.gnu.org/licenses/>.
 
+
+# Tests of Gtk2::Ex::ComboBox::Enum requiring Test::Weaken (and also a
+# DISPLAY).
+
 use 5.008;
 use strict;
 use warnings;
@@ -64,7 +68,7 @@ plan tests => 1;
      });
   is ($leaks, undef, 'Test::Weaken deep garbage collection');
   if ($leaks) {
-    eval { diag "Test-Weaken ", explain $leaks }; # explain new in 0.82
+    eval { diag "Test-Weaken ", explain($leaks) }; # explain in Test::More 0.82
 
     my $unfreed = $leaks->unfreed_proberefs;
     foreach my $proberef (@$unfreed) {

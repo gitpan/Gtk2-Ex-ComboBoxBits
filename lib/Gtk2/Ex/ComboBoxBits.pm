@@ -28,7 +28,7 @@ our @EXPORT_OK = qw(set_active_text
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 4;
+our $VERSION = 5;
 
 sub set_active_text {
   my ($combobox, $str) = @_;
@@ -37,8 +37,13 @@ sub set_active_text {
     ### $iter
     $combobox->set_active_iter ($iter);
   } else {
-    # pending perl-gtk 1.240 set_active_iter() accepting undef
-    $combobox->set_active (-1);
+    # As of Gtk 2.20 set_active() throws a g_log() warning if there's no
+    # model set.  Prefer to quietly do nothing to make no active item when
+    # already no active item.
+    if ($combobox->get_model) {
+      # pending perl-gtk 1.240 set_active_iter() accepting undef
+      $combobox->set_active (-1);
+    }
   }
   ### active N now: $combobox->get_active
 }
@@ -126,7 +131,7 @@ C<Exporter> style,
 
     use Gtk2::Ex::ComboBoxBits 'set_active_text';
 
-This can be handy if using C<set_active_text> in several places.
+This can be handy if using C<set_active_text> many times.
 C<Gtk2::Ex::ComboBox::Text> imports it to use as an object method.
 
 There's no C<:all> tag since this module is meant as a grab-bag of functions

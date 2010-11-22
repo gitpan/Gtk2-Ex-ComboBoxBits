@@ -26,24 +26,24 @@ use lib 't';
 use MyTestHelpers;
 BEGIN { MyTestHelpers::nowarnings() }
 
-require Gtk2::Ex::ComboBox::Enum;
+require Gtk2::Ex::ComboBoxBits;
 
 #------------------------------------------------------------------------------
 # VERSION
 
 {
   my $want_version = 5;
-  is ($Gtk2::Ex::ComboBox::Enum::VERSION,
+  is ($Gtk2::Ex::ComboBoxBits::VERSION,
       $want_version,
       'VERSION variable');
-  is (Gtk2::Ex::ComboBox::Enum->VERSION,
+  is (Gtk2::Ex::ComboBoxBits->VERSION,
       $want_version,
       'VERSION class method');
 
-  ok (eval { Gtk2::Ex::ComboBox::Enum->VERSION($want_version); 1 },
+  ok (eval { Gtk2::Ex::ComboBoxBits->VERSION($want_version); 1 },
       "VERSION class check $want_version");
   my $check_version = $want_version + 1000;
-  ok (! eval { Gtk2::Ex::ComboBox::Enum->VERSION($check_version); 1 },
+  ok (! eval { Gtk2::Ex::ComboBoxBits->VERSION($check_version); 1 },
       "VERSION class check $check_version");
 }
 

@@ -17,6 +17,10 @@ with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+Version 5, November 2010
+    - ComboBoxBits set_active_text() undef do nothing if no model set
+    - ComboBox::Enum new get_active_nick() and set_active_nick()
+
 Version 4, October 2010
     - new Gtk2::Ex::ComboBox::PixbufType
 

@@ -24,12 +24,12 @@ use Gtk2;
 use Scalar::Util;
 use Glib::Ex::SignalBits;
 use Glib::Ex::EnumBits;
-use Gtk2::Ex::ComboBoxBits;
+use Gtk2::Ex::ComboBoxBits 5; # v.5 for set_active_text() when no model
 
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 4;
+our $VERSION = 5;
 
 use Glib::Object::Subclass
   'Gtk2::ComboBox',
@@ -42,33 +42,36 @@ use Glib::Object::Subclass
                     accumulator   => \&Glib::Ex::SignalBits::accumulator_first_defined,
                   },
              },
-  properties => [ (Glib::Param->can('gtype')
-                   ?
-                   # new in Glib 2.10 and Perl-Glib 1.240
-                   Glib::ParamSpec->gtype
-                   ('enum-type',
-                    'enum-type',
-                    'The enum class to display.',
-                    'Glib::Enum',
-                    Glib::G_PARAM_READWRITE)
-                   :
-                   # default is undef but Glib::ParamSpec->string() doesn't
-                   # allow that until Perl-Glib 1.240, and in that case have
-                   # Glib::ParamSpec->gtype() above
-                   Glib::ParamSpec->string
-                   ('enum-type',
-                    'enum-type',
-                    'The enum class to display.',
-                    '',
-                    Glib::G_PARAM_READWRITE)),
+  properties => [
+                 # FIXME: default enum-type is undef but
+                 # Glib::ParamSpec->string() doesn't allow that until
+                 # Perl-Glib 1.240, in which case have
+                 # Glib::ParamSpec->gtype().
+                 #
+                 (Glib::ParamSpec->can('gtype')
+                  ?
+                  # new in Glib 2.10 and Perl-Glib 1.240
+                  Glib::ParamSpec->gtype
+                  ('enum-type',
+                   'enum-type',
+                   'The enum class to display.',
+                   'Glib::Enum',
+                   Glib::G_PARAM_READWRITE)
+                  :
+                  Glib::ParamSpec->string
+                  ('enum-type',
+                   'enum-type',
+                   'The enum class to display.',
+                   '',
+                   Glib::G_PARAM_READWRITE)),
 
                   Glib::ParamSpec->string
                   ('active-nick',
                    'active-nick',
                    'The selected enum value, as its nick.',
-                   # FIXME: default is undef, pending perl-glib 1.240 to
-                   # accept that here
-                   '', # default
+                   (eval {Glib->VERSION(1.240);1}  
+                    ? undef # default
+                    : ''),  # no undef/NULL before Perl-Glib 1.240
                    Glib::G_PARAM_READWRITE),
                 ];
 
@@ -106,13 +109,8 @@ sub GET_PROPERTY {
   ### Enum GET_PROPERTY: $pname
 
   if ($pname eq 'active_nick') {
-    # ### nick: $self->get_model->get_value ($iter, _COLUMN_NICK)
-    my ($model, $iter);
-    return (($model = $self->get_model)
-            && ($iter = $self->get_active_iter)
-            && $model->get_value ($iter, _COLUMN_NICK));
+    return $self->get_active_nick;
   }
-
   # $pname eq 'enum_type'
   return $self->{$pname};
 }
@@ -158,7 +156,19 @@ sub SET_PROPERTY {
   }
 
   # $pname eq 'active_nick'
-  Gtk2::Ex::ComboBoxBits::set_active_text ($self, $newval);
+  $self->set_active_nick ($newval);
+}
+
+sub get_active_nick {
+  my ($self) = @_;
+  my ($model, $iter);
+  return (($model = $self->get_model)
+          && ($iter = $self->get_active_iter)
+          && $model->get_value ($iter, _COLUMN_NICK));
+}
+sub set_active_nick {
+  my ($self, $nick) = @_;
+  Gtk2::Ex::ComboBoxBits::set_active_text ($self, $nick);
 }
 
 sub default_nick_to_display {
@@ -249,6 +259,14 @@ pairs set initial properties per C<< Glib::Object->new >>.
                   (enum_type => 'Gtk2::TextDirection',
                    active    => 0); # the first row
 
+=item C<< $str = $combobox->get_active_nick >>
+
+=item C<< $combobox->set_active_nick ($str) >>
+
+Get or set the C<active-nick> property described below.  C<set_active_nick>
+does nothing if C<$str> is already the active nick, in particular it doesn't
+emit a C<notify> in that case.
+
 =back
 
 =head1 PROPERTIES
@@ -265,10 +283,11 @@ exists in the new type then it remains selected, possibly on a different
 row.  If the C<active-nick> doesn't exist in the new type then the combobox
 changes to nothing selected.
 
-This property is a C<Glib::Param::GType> in Glib 2.10 and Glib-Perl 1.240
-where that ParamSpec is available, or a plain string otherwise.  At the Perl
-level a GType is a string anyway, but a GType pspec checks a setting really
-is a C<Glib::Enum> sub-type.
+This property is a C<Glib::Param::GType> when possible, or a
+C<Glib::Param::String> otherwise.  In both cases at the Perl level the value
+is a type name string, but the GType will check a setting really is an enum.
+Currently in both cases the pspec C<get_default_value> does not give the
+actual default C<undef>.
 
 =item C<active-nick> (string or C<undef>, default C<undef>)
 

@@ -94,9 +94,9 @@ use Glib::Object::Subclass
                   ('active-type',
                    'active-type',
                    'Gdk Pixbuf file save format, such as "png".',
-                   # FIXME: actual default is undef, when Perl-Gtk 1.240
-                   # supports that
-                   '',
+                   (eval {Glib->VERSION(1.240);1}  
+                    ? undef # default
+                    : ''),  # no undef/NULL before Perl-Glib 1.240
                    Glib::G_PARAM_READWRITE),
 
                   Glib::ParamSpec->int

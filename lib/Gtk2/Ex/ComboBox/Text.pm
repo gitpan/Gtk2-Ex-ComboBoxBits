@@ -27,7 +27,7 @@ use Gtk2::Ex::ComboBoxBits 'set_active_text';
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 4;
+our $VERSION = 5;
 
 use Glib::Object::Subclass
   'Gtk2::ComboBox',
@@ -36,25 +36,31 @@ use Glib::Object::Subclass
                   ('active-text',
                    'active-text',
                    'The selected text value.',
-                   # FIXME: actual default is undef, when Perl-Gtk 1.240
-                   # supports that
-                   '',
+                   (eval {Glib->VERSION(1.240);1}
+                    ? undef  # default
+                    : ''),   # no undef/NULL before Perl-Glib 1.240
                    Glib::G_PARAM_READWRITE),
 
 
                   # these are not gettable, so the default doesn't matter,
-                  # but might prefer undef when that's possible
+                  # but give undef
+                  #
                   Glib::ParamSpec->string
                   ('append-text',
                    'append-text',
                    'Append a text string.',
-                   '',
+                   (eval {Glib->VERSION(1.240);1}
+                    ? undef  # default
+                    : ''),   # no undef/NULL before Perl-Glib 1.240
                    ['writable']),
+
                   Glib::ParamSpec->string
                   ('prepend-text',
                    'prepend-text',
                    'Prepend a text string.',
-                   '',
+                   (eval {Glib->VERSION(1.240);1}
+                    ? undef  # default
+                    : ''),   # no undef/NULL before Perl-Glib 1.240
                    ['writable']),
                 ];
 
