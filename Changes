@@ -17,6 +17,9 @@ with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+Version 6, December 2010
+    - new Gtk2::Ex::Menu::EnumRadio
+
 Version 5, November 2010
     - ComboBoxBits set_active_text() undef do nothing if no model set
     - ComboBox::Enum new get_active_nick() and set_active_nick()

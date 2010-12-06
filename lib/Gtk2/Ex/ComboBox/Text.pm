@@ -27,7 +27,7 @@ use Gtk2::Ex::ComboBoxBits 'set_active_text';
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 5;
+our $VERSION = 6;
 
 use Glib::Object::Subclass
   'Gtk2::ComboBox',
@@ -150,6 +150,11 @@ C<Gtk2::ComboBox>,
 This is a "text" style convenience C<Gtk2::ComboBox> with the addition of an
 C<active-text> property, and a couple of pseudo-properties to help filling
 in the choices.
+
+    +-----------+
+    | Text One  |
+    +-----------+
+      ...
 
 The C<active-text> property is the same as C<< $combo->get_active_text >>
 but as a property can be treated a bit more generally than a method call,

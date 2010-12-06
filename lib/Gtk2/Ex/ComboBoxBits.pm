@@ -28,7 +28,7 @@ our @EXPORT_OK = qw(set_active_text
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 5;
+our $VERSION = 6;
 
 sub set_active_text {
   my ($combobox, $str) = @_;

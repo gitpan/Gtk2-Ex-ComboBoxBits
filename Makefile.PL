@@ -40,8 +40,13 @@ MyMakeMakerExtras::WriteMakefile
                     'Gtk2' => '1.220',
 
                     # my Glib-Ex-ObjectBits
-                    'Glib::Ex::SignalBits' => 9,  # new in version 9
-                    'Glib::Ex::EnumBits'   => 10, # new in version 10
+                    'Glib::Ex::FreezeNotify' => 1, # started in v.1
+                    'Glib::Ex::EnumBits'   => 10, # new in v.10
+                    'Glib::Ex::SignalBits' => 9,  # new in v.9
+                    'Glib::Ex::ObjectBits' => 12, # new in v.12
+
+                    # my Glib-Ex-WidgetBits
+                    'Gtk2::Ex::MenuItem::Subclass' => 30, # v.30 $VERSION fix
                    },
 
    META_MERGE

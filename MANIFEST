@@ -9,6 +9,7 @@ debian/source/format
 debian/watch
 devel/builder-activetext.pl
 devel/enum.pl
+devel/pixbuf.pl
 examples/text-builder.pl
 inc/my_pod2html
 inc/MyMakeMakerExtras.pm
@@ -16,6 +17,8 @@ lib/Gtk2/Ex/ComboBox/Enum.pm
 lib/Gtk2/Ex/ComboBox/PixbufType.pm
 lib/Gtk2/Ex/ComboBox/Text.pm
 lib/Gtk2/Ex/ComboBoxBits.pm
+lib/Gtk2/Ex/Menu/EnumRadio.pm
+lib/Gtk2/Ex/Menu/EnumRadio/Item.pm
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
@@ -25,6 +28,7 @@ t/ComboBoxBits.t
 t/Enum-display.t
 t/Enum-weaken.t
 t/Enum.t
+t/Menu-EnumRadio.t
 t/MyTestHelpers.pm
 t/PixbufType-weaken.t
 t/PixbufType.t

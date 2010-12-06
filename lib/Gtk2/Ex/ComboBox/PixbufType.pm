@@ -167,37 +167,52 @@ sub _do_notify {
   }
 }
 
-# fallback enough for the formats examinations below, including the fallback
-# $is_writable_method
+# Gtk2::Gdk::Pixbuf->$get_formats_method
+# being either get_formats() or a fallback enough for the formats
+# examinations below.  The fallback includes an 'is_writable' to use the
+# smaller _is_writable().
+#
 my $get_formats_method
   = (Gtk2::Gdk::Pixbuf->can('get_formats') # new in Gtk 2.2
      ? 'get_formats'
-     : sub { return ({ name => 'png' },
-                     { name => 'jpeg' }) });
+     : sub { return ({ name => 'png',
+                       is_writable => 1},
+                     { name => 'jpeg',
+                       is_writable => 1 }) });
 
-my $is_writable_method
-  # is_writable() new in Gtk 2.2, and not wrapped until some time post
-  # Perl-Gtk 1.220
-  = (Gtk2::Gdk::PixbufFormat->can('is_writable')
-     ? 'is_writable'
-     : do {
-       my %writable = (png => 1,
-                       jpeg => 1, # Gtk 2.0 and 2.2
+# _is_writable($format) returning bool
+#
+*_is_writable =
+  (exists((Gtk2::Gdk::Pixbuf->$get_formats_method)[0]->{'is_writable'})
+   ?
+   # 'is_writable' field new in Perl-Gtk 1.240
+   sub {
+     my ($format) = @_;
+       ### _is_writable() using field
+       ### $format
+     return $format->{'is_writable'};
+   }
+   : do {
+     # Perl-Gtk 1.222 and earlier
+     my %is_writable = (png  => 1, # Gtk 2.0 and 2.2
+                        jpeg => 1,
 
-                       (Gtk2->check_version(2,4,0)  # 2.4.0 for ico saving
-                        ? () : (ico => 1)),
+                        (Gtk2->check_version(2,4,0)  # 2.4.0 for ico saving
+                         ? () : (ico => 1)),
 
-                       (Gtk2->check_version(2,8,0)  # 2.8.0 for bmp saving
-                        ? () : (bmp => 1)),
+                        (Gtk2->check_version(2,8,0)  # 2.8.0 for bmp saving
+                         ? () : (bmp => 1)),
 
-                       (Gtk2->check_version(2,10,0) # 2.10.0 for tiff saving
-                        ? () : (tiff =>  1)),
-                      );
-       sub {
-         my ($format) = @_;
-         return $writable{$format->{'name'}};
-       }
-     });
+                        (Gtk2->check_version(2,10,0) # 2.10.0 for tiff saving
+                         ? () : (tiff =>  1)),
+                       );
+     sub {
+       my ($format) = @_;
+       ### _is_writable() using fallback
+       ### $format
+       return $is_writable{$format->{'name'}};
+     }
+   });
 
 # ICO limited to 255x255.
 #
@@ -220,7 +235,7 @@ sub _update_model {
                   $self->get('for-height'));
   my @formats =
     grep {$size <= ($format_max_size{$_->{'name'}} || $size)}
-      grep {$_->$is_writable_method}
+      grep {_is_writable($_)}
         Gtk2::Gdk::Pixbuf->$get_formats_method;
 
   foreach my $format (@formats) {
@@ -283,12 +298,17 @@ C<Gtk2::ComboBox>,
 A C<PixbufType> combobox displays file format types available for
 C<Gtk2::Gdk::Pixbuf>.
 
+    +------+
+    | PNG  |
+    +------+
+      ...
+
 The C<active-type> property is the type displayed and updated with the
-user's selection.
+user's selection, eg "png".
 
 Currently the types shown are the writable formats in alphabetical order.
 Writability is checked in C<Gtk2::Gdk::PixbufFormat> under new enough
-Perl-Gtk2 (some time post 1.220), or for older Perl-Gtk2 there's a
+Perl-Gtk2 (some time post 1.223), or for older Perl-Gtk2 there's a
 hard-coded list of "png", "jpeg", "tiff", "ico" and "bmp" (less any not
 applicable under an older Gtk).
 

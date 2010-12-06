@@ -15,37 +15,41 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 842745cb706f8f2126506f544492f7a80dbe29b3 COPYING
-SHA1 26b5396735a2fdd1a709adc5bb1dd13db90aa0ed Changes
-SHA1 bd75499eec5c0b2f61b803cddad659e044a76b7f MANIFEST
+SHA1 6d832531fc569d5c12b092b21db7d214c4682baa Changes
+SHA1 36547157113c674996196801ae8d1e65f732f8f9 MANIFEST
 SHA1 e6e7c2904ea5d300c0ddf70fc5a80f5005229aa9 MANIFEST.SKIP
-SHA1 3fc41258246df08ae503751300dc757414c4558e META.yml
-SHA1 81a88fd77ed8d9b8c93ecf151ebde709d8bf8724 Makefile.PL
-SHA1 6b7e9bb224b169d29c18684d61ed43e6b584b4df debian/changelog
+SHA1 64d7d4ed9937713270c304aa4859ec2a4048977d META.yml
+SHA1 1384d3be5254277d2db70165827e7871cdf50c75 Makefile.PL
+SHA1 d0c4157f5e87ddc6e0a5a76f4f4fee17f6e2af2c debian/changelog
 SHA1 ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 debian/compat
-SHA1 5f21d461dc7e989808f5e235c99713d514be39ba debian/control
+SHA1 c7e4a22b01a954bbac84ec91875cc7ca16792c34 debian/control
 SHA1 d71bde5867856ba326f696421209d742234b09a6 debian/copyright
 SHA1 85f28ce6d58e45775ee87430e0118760cce0d454 debian/rules
 SHA1 61652cd1568dcf2614df833eba241755eee34e89 debian/source/format
 SHA1 12a6576f2d7f5727007fcd8820a9ef146fe591be debian/watch
 SHA1 471040fd34f1c48e9a6f1030940a59641db7df17 devel/builder-activetext.pl
 SHA1 579afdf951d1945a2a99a5163554be1ca77220ff devel/enum.pl
+SHA1 f3b989755888e3c2a1c4e914aaf19cd522d09458 devel/pixbuf.pl
 SHA1 f866b99f6db06943bf0071747da4eda50254393e examples/text-builder.pl
 SHA1 4fb53efe76b3b2264eaa4cf7780cb0c4923e18a5 inc/MyMakeMakerExtras.pm
 SHA1 692a1ddc2ca6b98cac7b48ea40bc1ac1509e8ed9 inc/my_pod2html
-SHA1 560f831fce27cc2973ced5c087017c37d1273ebc lib/Gtk2/Ex/ComboBox/Enum.pm
-SHA1 13be6197bcad9735875b82252d8406ad738b1a46 lib/Gtk2/Ex/ComboBox/PixbufType.pm
-SHA1 b9be3968b375189fcf23dddd7f71dc6ad43e380d lib/Gtk2/Ex/ComboBox/Text.pm
-SHA1 edae57a99aac6fc026c0002e040ff75a3dd8580c lib/Gtk2/Ex/ComboBoxBits.pm
+SHA1 6e72ee5a1bf7396c759b20d97efa181a8fe95d30 lib/Gtk2/Ex/ComboBox/Enum.pm
+SHA1 55dc59d58a620d30e19cd84c771baa5c274aad07 lib/Gtk2/Ex/ComboBox/PixbufType.pm
+SHA1 9b06719fbdaceedb82dbf2ea21600abadfed3adc lib/Gtk2/Ex/ComboBox/Text.pm
+SHA1 3d67fdcb554d4ea849f07af98ce7bf51c57c76f4 lib/Gtk2/Ex/ComboBoxBits.pm
+SHA1 26bff925e890afa891e44637ca08ea10d092e59e lib/Gtk2/Ex/Menu/EnumRadio.pm
+SHA1 f772e0b148ab60f786e06a029f211eae6daa48f3 lib/Gtk2/Ex/Menu/EnumRadio/Item.pm
 SHA1 13a06ed71c43bbe8a38e0fa36e3c8506b8ed7bbd t/ComboBoxBits-display.t
-SHA1 1c863bffb06f5e1b7a95b6c55a53c7fde5a5e9e7 t/ComboBoxBits.t
+SHA1 4251bb5a89187dfbb0cbfbf459400811ba635320 t/ComboBoxBits.t
 SHA1 101a81be8623ff67f7a9e7f9c2806d5dfefb5c42 t/Enum-display.t
 SHA1 07d465e671eea1d8330bd040c8a47379e5549633 t/Enum-weaken.t
-SHA1 95b39e4c7ea972cecca565e9a06601b1e38e7866 t/Enum.t
+SHA1 5d2ad3fda85bc69a4637d3340043ea7d2d6151aa t/Enum.t
+SHA1 5741ae45406511daa6e5bc995bbead90cfc3f039 t/Menu-EnumRadio.t
 SHA1 5e5680b471811244fe93571efc23e7b6089cac3b t/MyTestHelpers.pm
 SHA1 71535d899099fc475fb01aa8a4b323003491c24f t/PixbufType-weaken.t
 SHA1 a71c2fb10f7aa4cc6b702981839df26493dab9cd t/PixbufType.t
 SHA1 06b321c36977d841dedc60d0e4afb7d59ce1bd6f t/Test/Weaken/ExtraBits.pm
-SHA1 0f659e4d32304a9e140b0e77455b55f07726bab2 t/Text-display.t
+SHA1 738526b064b8abb7bf8cd7a0255f6a45ac9a23d4 t/Text-display.t
 SHA1 9127f78a0dfa04976acbb979dd7862ef59a74c58 xt/0-META-read.t
 SHA1 37abd43b41068804ea4bb099fdd89af21be82926 xt/0-Test-DistManifest.t
 SHA1 8f93fb4c8f0424a4442cc93c9a2e86342ef55281 xt/0-Test-Pod.t
@@ -54,7 +58,7 @@ SHA1 fb517c2fae5ddac559318bf6a224949115ea3129 xt/0-Test-YAML-Meta.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 
-iD8DBQFM6tlfLFMCIV9q3ToRAhU0AJ98EMPPi3ucZp8aSYN+24hZtP4BiwCfRwTy
-VuidhdMyaTtdlkJPebIHorg=
-=/nyv
+iD8DBQFM/VR3LFMCIV9q3ToRAqPcAKC2GIsMaI1mWnffC+6gYJTFJvxHVQCggpX/
+TRtNZdxVfxLABXkhsymndHs=
+=gwYC
 -----END PGP SIGNATURE-----

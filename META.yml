@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Gtk2-Ex-ComboBoxBits
-version:            5
+version:            6
 abstract:           Some ComboBox things.
 author:
     - Kevin Ryde <user42@zip.com.au>
@@ -12,9 +12,12 @@ build_requires:
     ExtUtils::MakeMaker:  0
 requires:
     Glib::Ex::EnumBits:   10
+    Glib::Ex::FreezeNotify:  1
+    Glib::Ex::ObjectBits:  12
     Glib::Ex::SignalBits:  9
     Glib::Object::Subclass:  0
     Gtk2:                 1.220
+    Gtk2::Ex::MenuItem::Subclass:  30
     perl:                 5.008
 resources:
     homepage:  http://user42.tuxfamily.org/gtk2-ex-comboboxbits/index.html

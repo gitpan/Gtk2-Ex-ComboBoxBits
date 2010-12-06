@@ -1,5 +1,5 @@
-libgtk2-ex-comboboxbits-perl (5-1) unstable; urgency=low
+libgtk2-ex-comboboxbits-perl (6-1) unstable; urgency=low
 
   * Packaged version.
 
- -- Kevin Ryde <user42@zip.com.au>  Mon, 22 Nov 2010 18:24:03 +1100
+ -- Kevin Ryde <user42@zip.com.au>  Tue, 07 Dec 2010 08:23:53 +1100
