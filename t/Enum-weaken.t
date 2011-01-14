@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Gtk2-Ex-WidgetBits.
 #
@@ -47,12 +47,6 @@ eval "use Test::Weaken::Gtk2; 1"
 
 plan tests => 1;
 
-# sub my_ignore {
-#   my ($ref) = @_;
-#   return ($ref == Gtk2::Ex::ComboBox::Enum->DEFAULT_MODEL);
-# }
-
-
 {
   my $leaks = Test::Weaken::leaks
     ({ constructor => sub {
@@ -64,21 +58,9 @@ plan tests => 1;
        },
        destructor => \&Test::Weaken::Gtk2::destructor_destroy,
        contents => \&Test::Weaken::Gtk2::contents_container,
-       # ignore => \&my_ignore,
      });
   is ($leaks, undef, 'Test::Weaken deep garbage collection');
-  if ($leaks) {
-    eval { diag "Test-Weaken ", explain($leaks) }; # explain in Test::More 0.82
-
-    my $unfreed = $leaks->unfreed_proberefs;
-    foreach my $proberef (@$unfreed) {
-      diag "  unfreed $proberef";
-    }
-    foreach my $proberef (@$unfreed) {
-      diag "  search $proberef";
-      MyTestHelpers::findrefs($proberef);
-    }
-  }
+  MyTestHelpers::test_weaken_show_leaks($leaks);
 }
 
 exit 0;

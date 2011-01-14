@@ -1,4 +1,4 @@
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Gtk2-Ex-ComboBoxBits.
 #
@@ -25,7 +25,7 @@ use Gtk2;
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 6;
+our $VERSION = 28;
 
 # Gtk2::RadioMenuItem is no good as the base class since it insists on at
 # least one item active all the time.
@@ -38,7 +38,7 @@ use Glib::Object::Subclass
   signals => { activate => \&_do_activate },
   properties => [ Glib::ParamSpec->string
                   ('nick',
-                   'nick',
+                   'Enum nick',
                    'The enum nick for this item.',
                    (eval {Glib->VERSION(1.240);1}
                     ? undef # default

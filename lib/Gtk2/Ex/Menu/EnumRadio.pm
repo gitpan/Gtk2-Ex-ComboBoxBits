@@ -1,4 +1,4 @@
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Gtk2-Ex-ComboBoxBits.
 #
@@ -29,7 +29,7 @@ use Gtk2::Ex::Menu::EnumRadio::Item;
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 6;
+our $VERSION = 28;
 
 use Glib::Object::Subclass
   'Gtk2::Menu',
@@ -50,23 +50,23 @@ use Glib::Object::Subclass
                   # gtype() new in Glib 2.10 and Perl-Glib 1.240
                   Glib::ParamSpec->gtype
                   ('enum-type',
-                   'enum-type',
+                   'Enum type',
                    'The enum class to display.',
                    'Glib::Enum',
                    Glib::G_PARAM_READWRITE)
                   :
                   Glib::ParamSpec->string
                   ('enum-type',
-                   'enum-type',
+                   'Enum type',
                    'The enum class to display.',
                    (eval {Glib->VERSION(1.240);1}
                     ? undef # default
                     : ''),  # no undef/NULL before Perl-Glib 1.240
                    Glib::G_PARAM_READWRITE)),
-                 
+
                  Glib::ParamSpec->string
                  ('active-nick',
-                  'active-nick',
+                  'Active nick',
                   'The selected enum value, as its nick.',
                   (eval {Glib->VERSION(1.240);1}
                    ? undef # default
@@ -82,11 +82,10 @@ sub GET_PROPERTY {
   my ($self, $pspec) = @_;
   my $pname = $pspec->get_name;
   ### Enum GET_PROPERTY: $pname
-  
+
   if ($pname eq 'active_nick') {
     return $self->get_active_nick;
   }
-  
   # $pname eq 'enum_type'
   return $self->{$pname};
 }
@@ -158,10 +157,10 @@ sub get_active_nick {
 #
 sub set_active_nick {
   my ($self, $nick) = @_;
-  
+
   # just one notify, not two for turning on and off
   my $freezer = Glib::Ex::FreezeNotify->new ($self);
-  
+
   foreach my $item ($self->get_children) {
     if ($item->isa('Gtk2::Ex::Menu::EnumRadio::Item')) {
       if (defined $nick) {
@@ -328,7 +327,7 @@ L<http://user42.tuxfamily.org/gtk2-ex-comboboxbits/index.html>
 
 =head1 LICENSE
 
-Copyright 2010 Kevin Ryde
+Copyright 2010, 2011 Kevin Ryde
 
 Gtk2-Ex-ComboBoxBits is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the

@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Gtk2-Ex-WidgetBits.
 #
@@ -32,7 +32,7 @@ require Gtk2::Ex::ComboBox::Enum;
 # VERSION
 
 {
-  my $want_version = 6;
+  my $want_version = 28;
   is ($Gtk2::Ex::ComboBox::Enum::VERSION,
       $want_version,
       'VERSION variable');

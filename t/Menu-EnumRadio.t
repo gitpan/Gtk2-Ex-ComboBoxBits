@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Gtk2-Ex-ComboBoxBits.
 #
@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License along
 # with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
-use 5.010;
+use 5.008;
 use strict;
 use warnings;
 use Test::More;
@@ -41,7 +41,7 @@ Glib::Type->register_enum ('My::Test1', 'foo', 'bar-ski', 'quux');
 #------------------------------------------------------------------------------
 # VERSION
 
-my $want_version = 6;
+my $want_version = 28;
 {
   is ($Gtk2::Ex::Menu::EnumRadio::VERSION,
       $want_version,

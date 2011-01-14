@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Gtk2-Ex-ComboBoxBits.
 #
@@ -45,8 +45,13 @@ MyMakeMakerExtras::WriteMakefile
                     'Glib::Ex::SignalBits' => 9,  # new in v.9
                     'Glib::Ex::ObjectBits' => 12, # new in v.12
 
-                    # my Glib-Ex-WidgetBits
+                    # my Glib-Ex-ConnectProperties
+                    'Glib::Ex::ConnectProperties' => 9, # v.9 warnings maybe
+
+                    # my Gtk2-Ex-WidgetBits
+                    'Gtk2::Ex::ContainerBits' => 21, # new in v.21
                     'Gtk2::Ex::MenuItem::Subclass' => 30, # v.30 $VERSION fix
+                    'Gtk2::Ex::MenuBits' => 35, # v.35 mnemonic_escape
                    },
 
    META_MERGE

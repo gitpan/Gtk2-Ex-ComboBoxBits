@@ -1,4 +1,4 @@
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Gtk2-Ex-ComboBoxBits.
 #
@@ -27,14 +27,14 @@ use Gtk2::Ex::ComboBoxBits 'set_active_text';
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 6;
+our $VERSION = 28;
 
 use Glib::Object::Subclass
   'Gtk2::ComboBox',
   signals => { notify => \&_do_notify },
   properties => [ Glib::ParamSpec->string
                   ('active-text',
-                   'active-text',
+                   'Active text',
                    'The selected text value.',
                    (eval {Glib->VERSION(1.240);1}
                     ? undef  # default
@@ -232,7 +232,7 @@ L<http://user42.tuxfamily.org/gtk2-ex-comboboxbits/index.html>
 
 =head1 LICENSE
 
-Copyright 2010 Kevin Ryde
+Copyright 2010, 2011 Kevin Ryde
 
 Gtk2-Ex-ComboBoxBits is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the

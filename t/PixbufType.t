@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Gtk2-Ex-ComboBoxBits.
 #
@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License along
 # with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
-use 5.010;
+use 5.008;
 use strict;
 use warnings;
 use Test::More;
@@ -40,7 +40,7 @@ require Gtk2::Ex::ComboBox::PixbufType;
 #------------------------------------------------------------------------------
 # VERSION
 
-my $want_version = 27;
+my $want_version = 28;
 {
   is ($Gtk2::Ex::ComboBox::PixbufType::VERSION,
       $want_version,

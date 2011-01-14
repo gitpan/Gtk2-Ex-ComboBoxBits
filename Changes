@@ -1,4 +1,4 @@
-Copyright 2010 Kevin Ryde
+Copyright 2010, 2011 Kevin Ryde
 
 This file is part of Gtk2-Ex-ComboBoxBits.
 
@@ -16,6 +16,11 @@ You should have received a copy of the GNU General Public License along
 with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
 
+
+Version 28, January 2011
+    - new Gtk2::Ex::ToolItem::ComboEnum
+    - jump version number across Gtk2::Ex::ComboBox::PixbufType
+      had $VERSION=27
 
 Version 6, December 2010
     - new Gtk2::Ex::Menu::EnumRadio

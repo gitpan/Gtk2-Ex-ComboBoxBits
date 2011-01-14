@@ -1,4 +1,4 @@
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Gtk2-Ex-ComboBoxBits.
 #
@@ -29,7 +29,7 @@ use Gtk2::Ex::ComboBoxBits 5; # v.5 for set_active_text() when no model
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 6;
+our $VERSION = 28;
 
 use Glib::Object::Subclass
   'Gtk2::ComboBox',
@@ -51,14 +51,14 @@ use Glib::Object::Subclass
                   # gtype() new in Glib 2.10 and Perl-Glib 1.240
                   Glib::ParamSpec->gtype
                   ('enum-type',
-                   'enum-type',
+                   'Enum type',
                    'The enum class to display.',
                    'Glib::Enum',
                    Glib::G_PARAM_READWRITE)
                   :
                   Glib::ParamSpec->string
                   ('enum-type',
-                   'enum-type',
+                   'Enum type',
                    'The enum class to display.',
                    (eval {Glib->VERSION(1.240);1}
                     ? undef # default
@@ -67,7 +67,7 @@ use Glib::Object::Subclass
 
                  Glib::ParamSpec->string
                  ('active-nick',
-                  'active-nick',
+                  'Active enum nick',
                   'The selected enum value, as its nick.',
                   (eval {Glib->VERSION(1.240);1}
                    ? undef # default
@@ -206,7 +206,7 @@ __END__
 # }
 
 
-=for stopwords Gtk2-Ex-ComboBoxBits enum ParamSpec GType pspec Enum Ryde ComboBoxBits combobox ComboBox
+=for stopwords Gtk2-Ex-ComboBoxBits enum ParamSpec GType pspec Enum Ryde ComboBoxBits combobox ComboBox paramspec
 
 =head1 NAME
 
@@ -335,7 +335,7 @@ L<http://user42.tuxfamily.org/gtk2-ex-comboboxbits/index.html>
 
 =head1 LICENSE
 
-Copyright 2010 Kevin Ryde
+Copyright 2010, 2011 Kevin Ryde
 
 Gtk2-Ex-ComboBoxBits is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the

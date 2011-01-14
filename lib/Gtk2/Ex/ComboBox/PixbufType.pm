@@ -1,4 +1,4 @@
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Gtk2-Ex-ComboBoxBits.
 #
@@ -55,7 +55,7 @@ use Gtk2::Ex::ComboBoxBits;
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 27;
+our $VERSION = 28;
 
 if (0) {
   # These are the type names as of Gtk 2.20, extend if there's more and
@@ -92,7 +92,7 @@ use Glib::Object::Subclass
   signals => { notify => \&_do_notify },
   properties => [ Glib::ParamSpec->string
                   ('active-type',
-                   'active-type',
+                   'Active pixbuf type',
                    'Gdk Pixbuf file save format, such as "png".',
                    (eval {Glib->VERSION(1.240);1}  
                     ? undef # default
@@ -185,7 +185,7 @@ my $get_formats_method
 *_is_writable =
   (exists((Gtk2::Gdk::Pixbuf->$get_formats_method)[0]->{'is_writable'})
    ?
-   # 'is_writable' field new in Perl-Gtk 1.240
+   # 'is_writable' field, new in Perl-Gtk 1.240
    sub {
      my ($format) = @_;
        ### _is_writable() using field
@@ -193,7 +193,8 @@ my $get_formats_method
      return $format->{'is_writable'};
    }
    : do {
-     # Perl-Gtk 1.222 and earlier
+     # Perl-Gtk 1.222 and earlier hard coded
+     #
      my %is_writable = (png  => 1, # Gtk 2.0 and 2.2
                         jpeg => 1,
 
@@ -364,7 +365,7 @@ L<http://user42.tuxfamily.org/gtk2-ex-comboboxbits/index.html>
 
 =head1 LICENSE
 
-Copyright 2010 Kevin Ryde
+Copyright 2010, 2011 Kevin Ryde
 
 Gtk2-Ex-ComboBoxBits is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the
