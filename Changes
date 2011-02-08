@@ -17,6 +17,9 @@ with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+Version 29, January 2011
+    - ComboBoxBits new set_active_path()
+
 Version 28, January 2011
     - new Gtk2::Ex::ToolItem::ComboEnum
     - jump version number across Gtk2::Ex::ComboBox::PixbufType

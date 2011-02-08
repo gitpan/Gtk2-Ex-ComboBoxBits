@@ -32,6 +32,7 @@ MANIFEST			This list of files
 MANIFEST.SKIP
 SIGNATURE
 t/ComboBoxBits-display.t
+t/ComboBoxBits-load.t
 t/ComboBoxBits.t
 t/Enum-display.t
 t/Enum-weaken.t

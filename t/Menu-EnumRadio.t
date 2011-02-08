@@ -41,7 +41,7 @@ Glib::Type->register_enum ('My::Test1', 'foo', 'bar-ski', 'quux');
 #------------------------------------------------------------------------------
 # VERSION
 
-my $want_version = 28;
+my $want_version = 29;
 {
   is ($Gtk2::Ex::Menu::EnumRadio::VERSION,
       $want_version,

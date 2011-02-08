@@ -55,7 +55,7 @@ use Gtk2::Ex::ComboBoxBits;
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 28;
+our $VERSION = 29;
 
 if (0) {
   # These are the type names as of Gtk 2.20, extend if there's more and

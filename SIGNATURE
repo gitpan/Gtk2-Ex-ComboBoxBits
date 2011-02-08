@@ -15,12 +15,12 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 842745cb706f8f2126506f544492f7a80dbe29b3 COPYING
-SHA1 c21228910b931f0332b66af8579d8569f10f511c Changes
-SHA1 b4c530b4dd33dbe9c0dceee7663eb5072542b223 MANIFEST
-SHA1 efa47c98ea572cf27a93219b3fc08acbf255f915 MANIFEST.SKIP
-SHA1 9d373785ba611efbcc3e1d2fde94dfabae79a4ca META.yml
-SHA1 116145ca4a7a3df36b17eef9313e6cd32a431a6f Makefile.PL
-SHA1 4ea927737f66119b29f3cd63228a2bfa37652de1 debian/changelog
+SHA1 a87eedb24bfdb93c9471a323d48ba4d64da759c5 Changes
+SHA1 18dde1e8738ade39ee7c28073b012da56400a717 MANIFEST
+SHA1 6c771cc4b0718f7bc9c9af01889700d7bce0a8e6 MANIFEST.SKIP
+SHA1 c725d5fa8959d32dec1ff1719cd557c9791bf9c2 META.yml
+SHA1 1be26faf2da52f8c43593e18bb16d34e57a8293f Makefile.PL
+SHA1 c73aa020b4f5b9ca7250e360fe66bda8db816d8f debian/changelog
 SHA1 ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 debian/compat
 SHA1 dbac0f2c5a22feff77aedf9bc8d7ebdc163f92d2 debian/control
 SHA1 a115f6ab8e6b490c2ab243a595e6ace6de672ee1 debian/copyright
@@ -38,37 +38,38 @@ SHA1 5bb0ec7c5368682b09191a47c8707123a88d1e8c devel/toolbutton-overflow-leak.c
 SHA1 700fd67ed34034f99607eae27f32f8e90e8901f1 devel/toolbutton-overflow-leak.pl
 SHA1 f866b99f6db06943bf0071747da4eda50254393e examples/text-builder.pl
 SHA1 2748b3edecc5e726100eb70093e857f11422d519 examples/tool-enum-builder.pl
-SHA1 4fb53efe76b3b2264eaa4cf7780cb0c4923e18a5 inc/MyMakeMakerExtras.pm
+SHA1 cf647ee28a7aaad9896d0063f8a2529919ccfcd3 inc/MyMakeMakerExtras.pm
 SHA1 7a988b2aa7ed09f1cb9029a1ef3f0e2139dca0cf inc/my_pod2html
-SHA1 c875c2c9d1213920ae6535d1d5f0178161085ff8 lib/Gtk2/Ex/ComboBox/Enum.pm
-SHA1 53d23bbbed518c1b8f74f1084b19dd0ffe4a645c lib/Gtk2/Ex/ComboBox/PixbufType.pm
-SHA1 88591489c6bfb341fff9103ddfe17654015134da lib/Gtk2/Ex/ComboBox/Text.pm
-SHA1 96997d654d87ad86b7e52cf0bd7d28618b54136a lib/Gtk2/Ex/ComboBoxBits.pm
-SHA1 25eb77df2fecfb9ef7785bcd2c9651f666cc0103 lib/Gtk2/Ex/Menu/EnumRadio.pm
-SHA1 eebd8350bcc1e99e3a991d043f4ce42be57b185f lib/Gtk2/Ex/Menu/EnumRadio/Item.pm
-SHA1 911d360b12cfb0942bc3ba0eb0dfd4f970bf42d4 lib/Gtk2/Ex/ToolItem/ComboEnum.pm
-SHA1 13a06ed71c43bbe8a38e0fa36e3c8506b8ed7bbd t/ComboBoxBits-display.t
-SHA1 8636c9695592c2e63fb9bce30a0fc1adaec0a131 t/ComboBoxBits.t
-SHA1 101a81be8623ff67f7a9e7f9c2806d5dfefb5c42 t/Enum-display.t
-SHA1 85be8a378c6a8a82b2220cd222ff8c714d24b7c8 t/Enum-weaken.t
-SHA1 012342a6d0c0f763a206e48254b587f67250f02d t/Enum.t
-SHA1 9e5f3d9a8bbadc932de2574d1d63a3b6d1b3f0c9 t/Menu-EnumRadio.t
-SHA1 fd7ad68d9696ce2b58655b9d6c006c12540878cd t/MyTestHelpers.pm
+SHA1 da83171ff0e7e9c087bd5f5386e5af98d3a56940 lib/Gtk2/Ex/ComboBox/Enum.pm
+SHA1 22d8f70bdfd92fd364775fe7822baad176162fcd lib/Gtk2/Ex/ComboBox/PixbufType.pm
+SHA1 de59d19affe11b03ef5817db3ec6550367eab41b lib/Gtk2/Ex/ComboBox/Text.pm
+SHA1 ad31ce82f674a45b08ecca56f49918b4b6d94910 lib/Gtk2/Ex/ComboBoxBits.pm
+SHA1 ee969343af4d871e5f7d919d0b5736908c3e6489 lib/Gtk2/Ex/Menu/EnumRadio.pm
+SHA1 c5813b7f8a09fed122c8c912e42984f9dad6b715 lib/Gtk2/Ex/Menu/EnumRadio/Item.pm
+SHA1 a63b007bfb7730556917d264ee3693f8de66fd03 lib/Gtk2/Ex/ToolItem/ComboEnum.pm
+SHA1 1112b651cfed1822a2a325375f75171bf3a28a97 t/ComboBoxBits-display.t
+SHA1 b225b40d1f88c173c58a9ee106608263d006c2f2 t/ComboBoxBits-load.t
+SHA1 c5165725c472c92191803db3b85b35ca7fd43fe8 t/ComboBoxBits.t
+SHA1 7512277482173bbc6ca7f4c7c1db39bcdea0111f t/Enum-display.t
+SHA1 ae0f4fc34a80a2e5294733be4b1df3dd410eeb5a t/Enum-weaken.t
+SHA1 63d93708ef8c4bf21d77c0c2b884d5f5652b505d t/Enum.t
+SHA1 064627d3ef4d8cbbdc70a2c50b6816dd39128bee t/Menu-EnumRadio.t
+SHA1 36b8eba56c87d62b1b41959187c717577dc16fa5 t/MyTestHelpers.pm
 SHA1 d756372ca936b60869b75647b4f68054ec5e4e5b t/PixbufType-weaken.t
-SHA1 a8011a3eb2fce6452114d9fddbdd6bf94124e084 t/PixbufType.t
-SHA1 528055159151b14dc9ff1b14b6004bcf939c9064 t/Test/Weaken/ExtraBits.pm
-SHA1 eaf14b4d47f6396bf09b3d6fdecae65b3864b026 t/Text-display.t
+SHA1 5d5fd3e7014541b69e2c3d0e34b71db79e37e97a t/PixbufType.t
+SHA1 500b71053b808f6fd9c5ec4514beab566984fd3d t/Test/Weaken/ExtraBits.pm
+SHA1 8d67455b1aa0344890f555e58da64b1eb9801052 t/Text-display.t
 SHA1 b82cd3332164503637d5332b201076b2a0325dc5 t/ToolItem-EnumCombo-weaken.t
-SHA1 addd5e32d5d31a770761f3ea7b6ece55cc310ac0 t/ToolItem-EnumCombo.t
-SHA1 9127f78a0dfa04976acbb979dd7862ef59a74c58 xt/0-META-read.t
-SHA1 37abd43b41068804ea4bb099fdd89af21be82926 xt/0-Test-DistManifest.t
-SHA1 8f93fb4c8f0424a4442cc93c9a2e86342ef55281 xt/0-Test-Pod.t
-SHA1 1de8f07883f6bf1a2ef79f2cb8adf1deb3f61cee xt/0-Test-Synopsis.t
-SHA1 fb517c2fae5ddac559318bf6a224949115ea3129 xt/0-Test-YAML-Meta.t
+SHA1 0a9a72c24411bb513234bedbcb23548104b98db1 t/ToolItem-EnumCombo.t
+SHA1 0279c9310ec528d10a2a14e602bf98f1c776cce1 xt/0-META-read.t
+SHA1 8a5e0f34131de34e584fbb1939c191a152566155 xt/0-Test-DistManifest.t
+SHA1 cc04a5fe5d8b8b38bfd56453d5d2686c8ea58783 xt/0-Test-Pod.t
+SHA1 8cc52e23427a82cfef5802bf512b13c65de2687a xt/0-Test-Synopsis.t
+SHA1 4c14845872d6eb4280e12f862d6ba2c343358c60 xt/0-Test-YAML-Meta.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 
-iD8DBQFNMM4xLFMCIV9q3ToRAg77AKC3RLzCILq81mVCryhJ152iCtL1PgCeIqUT
-AIO5VdTK4pxUC+xmliELiqk=
-=0rMA
+iD8DBQFNUJThLFMCIV9q3ToRAteRAJ4mt5gkHWn+F2VP7dDwYV+SDSavhACgoGly
+uOYBv42yfPUF8GO+3FAeTfo=
+=4EDC
 -----END PGP SIGNATURE-----

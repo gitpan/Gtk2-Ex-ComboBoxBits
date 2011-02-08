@@ -29,7 +29,7 @@ use Gtk2::Ex::ComboBoxBits 5; # v.5 for set_active_text() when no model
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 28;
+our $VERSION = 29;
 
 use Glib::Object::Subclass
   'Gtk2::ComboBox',

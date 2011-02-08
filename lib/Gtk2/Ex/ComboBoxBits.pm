@@ -22,13 +22,39 @@ use warnings;
 
 use Exporter;
 our @ISA = ('Exporter');
-our @EXPORT_OK = qw(set_active_text
+our @EXPORT_OK = qw(set_active_path
+                    set_active_text
                     find_text_iter);
 
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 28;
+our $VERSION = 29;
+
+sub set_active_path {
+  my ($combobox, $path) = @_;
+  my $n = -1;
+
+  # Non-existent rows go to set_active(-1) since the Perl-Gtk2
+  # set_active_iter() doesn't accept undef (NULL) until 1.240.
+  # If ready to demand that version could
+  #     $combobox->set_active_iter ($model->get_iter($path));
+  # when there's a model
+
+  if ($path) {
+    if ($path->get_depth == 1) {
+      # top-level row using set_active()
+      ($n) = $path->get_indices;
+
+    } elsif (my $model = $combobox->get_model) {
+      if (my $iter = $model->get_iter($path)) {
+        $combobox->set_active_iter ($iter);
+        return;
+      }
+    }
+  }
+  $combobox->set_active ($n);
+}
 
 sub set_active_text {
   my ($combobox, $str) = @_;
@@ -108,6 +134,16 @@ Gtk2::Ex::ComboBoxBits -- misc Gtk2::ComboBox helpers
 =head1 FUNCTIONS
 
 =over
+
+=item C<< Gtk2::Ex::ComboBoxBits::set_active_path ($combobox, $path) >>
+
+Set the active item in C<$combobox> to the given C<Gtk2::TreePath>
+position.  If C<$path> is empty or C<undef> or there's no such row in the
+model then C<$combobox> is set to nothing active.
+
+If there's no model in C<$combobox> then a toplevel path is remembered ready
+for a model set later, the same as the native C<set_active>.  But sub-rows
+don't enjoy the same remembering.
 
 =item C<< $str = Gtk2::Ex::ComboBoxBits::set_active_text ($combobox, $str) >>
 

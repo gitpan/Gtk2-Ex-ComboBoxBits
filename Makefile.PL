@@ -48,24 +48,23 @@ MyMakeMakerExtras::WriteMakefile
                     # my Glib-Ex-ConnectProperties
                     'Glib::Ex::ConnectProperties' => 9, # v.9 warnings maybe
 
-                    # my Gtk2-Ex-WidgetBits
+                    # my Gtk2 Ex WidgetBits
                     'Gtk2::Ex::ContainerBits' => 21, # new in v.21
                     'Gtk2::Ex::MenuItem::Subclass' => 30, # v.30 $VERSION fix
                     'Gtk2::Ex::MenuBits' => 35, # v.35 mnemonic_escape
                    },
 
-   META_MERGE
-   => { resources
-        => { homepage
-             => 'http://user42.tuxfamily.org/gtk2-ex-comboboxbits/index.html',
-           },
-        optional_features
-        => { maximum_tests
-             => { description => 'Have "make test" do as much as possible.',
-                  requires => { 'Test::Weaken' => 3,
-                                'Test::Weaken::Gtk2' => 0,
-                              },
-                },
-           },
-      },
+   META_MERGE =>
+   { resources =>
+     { homepage => 'http://user42.tuxfamily.org/gtk2-ex-comboboxbits/index.html',
+     },
+     optional_features =>
+     { maximum_tests =>
+       { description => 'Have "make test" do as much as possible.',
+         requires => { 'Test::Weaken' => 3,
+                       'Test::Weaken::Gtk2' => 0,
+                     },
+       },
+     },
+   },
   );
