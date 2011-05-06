@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Gtk2-Ex-ComboBoxBits.
 #
@@ -35,7 +35,10 @@ $toplevel->signal_connect (destroy => sub { Gtk2->main_quit });
 my $vbox = Gtk2::VBox->new;
 $toplevel->add ($vbox);
 
-my $combo = Gtk2::Ex::ComboBox::PixbufType->new (active_type => 'png');
+my $combo = Gtk2::Ex::ComboBox::PixbufType->new (active_type => 'png',
+                                                 for_width => 128,
+                                                 for_height => 10,
+                                                );
 $vbox->pack_start ($combo, 0, 0, 0);
 
 $combo->signal_connect
@@ -64,6 +67,25 @@ $combo->signal_connect
   $button->signal_connect (clicked => sub { $combo->set_active(999); });
   $vbox->pack_start ($button, 0, 0, 0);
 }
+{
+  my $button = Gtk2::Button->new_with_label ('Set 999');
+  $button->signal_connect (clicked => sub { $combo->set_active(999); });
+  $vbox->pack_start ($button, 0, 0, 0);
+}
+{
+  require POSIX;
+  my $adj = Gtk2::Adjustment->new (0,  # initial
+                                   0,  # min
+                                   POSIX::INT_MAX(),  # max
+                                   1,100,    # step,page increment
+                                   0);      # page_size
+  require Glib::Ex::ConnectProperties;
+  Glib::Ex::ConnectProperties->new ([$combo,'for-width'],
+                                    [$adj,'value']);
+  my $spin = Gtk2::SpinButton->new ($adj, 10, 0);
+  $vbox->pack_start ($spin, 0, 0, 0);
+}
+
 
 $toplevel->show_all;
 Gtk2->main;

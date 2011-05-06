@@ -29,7 +29,7 @@ our @EXPORT_OK = qw(set_active_path
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 29;
+our $VERSION = 30;
 
 sub set_active_path {
   my ($combobox, $path) = @_;

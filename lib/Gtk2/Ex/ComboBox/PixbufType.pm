@@ -16,6 +16,7 @@
 # with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
 
+
 # for-pixbuf-save ?
 # insensitive or omit ?
 #                   Glib::ParamSpec->object
@@ -33,6 +34,13 @@
 
 # writable =>
 # exclude_read_only =>
+# include-read-only ?
+
+# always-select ?
+
+# set_active_from_filename
+
+# alphabetical ?
 
 # type or active-type ?
 # active-format ?
@@ -51,21 +59,22 @@ use Scalar::Util;
 use List::Util qw(max);
 use POSIX ();
 use Gtk2::Ex::ComboBoxBits;
+use Gtk2::Ex::PixbufBits 38;  # v.38 for type_supports_size()
 
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 29;
+our $VERSION = 30;
 
 if (0) {
   # These are the type names as of Gtk 2.20, extend if there's more and
   # want to translate their names.
   #
   # TRANSLATORS: These format names are localized in case a non-Latin script
-  # ought to be shown instead or as well.  Latin script languages will
-  # probably leave all unchanged since that will almost certainly make them
-  # easiest for the user identify, even if a literal translation would
-  # result in a different abbreviation.
+  # ought to be shown instead, or as well.  Latin script languages will
+  # probably leave all unchanged as that should make them easiest for the
+  # user identify, even if a literal translation would result in a different
+  # abbreviation.
   __('ANI');
   __('BMP');
   __('GIF');
@@ -215,53 +224,40 @@ my $get_formats_method
      }
    });
 
-# ICO limited to 255x255.
-#
-# JPEG limited to 65500x65500.
-#
-# PNG spec is for sizes up to 2^31-1, per but libpng png_check_IHDR() has
-# a PNG_USER_WIDTH_MAX / PNG_USER_HEIGHT_MAX which default to 1_000_000,
-# and there's also a width restriction (2^32-1)/8-129 to fit RGBA rows in
-# memory for benefit of 32-bit systems presumably.  Could think about
-# enforcing that.
-#
-my %format_max_size = (ico  => 255,
-                       jpeg => 65500,
-                       png  => (2**31-1));
-
 sub _update_model {
   my ($self) = @_;
+  ### PixbufType _update_model()
 
-  my $size = max ($self->get('for-width'),
-                  $self->get('for-height'));
-  my @formats =
-    grep {$size <= ($format_max_size{$_->{'name'}} || $size)}
-      grep {_is_writable($_)}
-        Gtk2::Gdk::Pixbuf->$get_formats_method;
+  my $for_width  = $self->get('for-width');
+  my $for_height = $self->get('for-height');
+  my @types =
+    grep {Gtk2::Ex::PixbufBits::type_supports_size($_,$for_width,$for_height)}
+      map {$_->{'name'}}
+        grep {_is_writable($_)}
+          Gtk2::Gdk::Pixbuf->$get_formats_method;
 
-  foreach my $format (@formats) {
-    $format->{'display'} = uc($format->{'name'});
-  }
+  # eg. 'png' => 'PNG'
+  my %display = map { $_ => uc($_) } @types;
 
   # translated descriptions
   if (eval { require Locale::Messages }) {
-    foreach my $format (@formats) {
-      $format->{'display'} = Locale::Messages::dgettext
-        ('Gtk2-Ex-ComboBoxBits', uc($format->{'display'}));
+    foreach my $type (@types) {
+      $display{$type} = Locale::Messages::dgettext ('Gtk2-Ex-ComboBoxBits',
+                                                    uc($display{$type}));
     }
   }
 
   # alphabetical by translated description
-  @formats = sort { $a->{'display'} cmp $b->{'display'} } @formats;
+  @types = sort { $display{$a} cmp $display{$b} } @types;
 
   my $type = $self->get('active-type');
   my $model = $self->get_model;
   $model->clear;
-  foreach my $format (@formats) {
-    ### display: $format->{'display'}
+  foreach my $type (@types) {
+    ### display: $display{$type}
     $model->set ($model->append,
-                 _COLUMN_TYPE,    $format->{'name'},
-                 _COLUMN_DISPLAY, $format->{'display'});
+                 _COLUMN_TYPE,    $type,
+                 _COLUMN_DISPLAY, $display{$type});
   }
 
   # preserve existing setting
@@ -351,6 +347,8 @@ Show only those file format types which support an image of this size.  For
 example "ico" format only goes up to 255x255, so if C<for-width> and
 C<for-height> are 300x150 then ico is not offered.  The default size 0 means
 no size restriction.
+
+These properties are C<int> type the same as Pixbuf width/height.
 
 =back
 

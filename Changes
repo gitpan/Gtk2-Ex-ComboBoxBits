@@ -17,6 +17,9 @@ with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+Version 30, May 2011
+    - use PixbufBits type_supports_size()
+
 Version 29, January 2011
     - ComboBoxBits new set_active_path()
 

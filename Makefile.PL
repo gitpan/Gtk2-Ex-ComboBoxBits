@@ -52,6 +52,7 @@ MyMakeMakerExtras::WriteMakefile
                     'Gtk2::Ex::ContainerBits' => 21, # new in v.21
                     'Gtk2::Ex::MenuItem::Subclass' => 30, # v.30 $VERSION fix
                     'Gtk2::Ex::MenuBits' => 35, # v.35 mnemonic_escape
+                    'Gtk2::Ex::PixbufBits' => 38, # v.38 type_supported_size()
                    },
 
    META_MERGE =>

@@ -32,7 +32,7 @@ require Gtk2::Ex::ComboBoxBits;
 # VERSION
 
 {
-  my $want_version = 29;
+  my $want_version = 30;
   is ($Gtk2::Ex::ComboBoxBits::VERSION,
       $want_version,
       'VERSION variable');

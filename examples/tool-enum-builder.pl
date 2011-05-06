@@ -50,7 +50,7 @@ use Gtk2 '-init';
 use Gtk2::Ex::ToolItem::ComboEnum;
 
 # uncomment this to run the ### lines
-use Smart::Comments;
+#use Smart::Comments;
 
 use FindBin;
 my $progname = $FindBin::Script;
