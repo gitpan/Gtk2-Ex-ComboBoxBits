@@ -26,7 +26,7 @@ use Gtk2::Ex::ComboBox::Enum 5; # v.5 for get_active_nick(),set_active_nick()
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 30;
+our $VERSION = 31;
 
 use Glib::Object::Subclass
   'Gtk2::ToolItem',

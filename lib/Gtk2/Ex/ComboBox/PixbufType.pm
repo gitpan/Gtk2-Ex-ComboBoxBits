@@ -64,7 +64,7 @@ use Gtk2::Ex::PixbufBits 38;  # v.38 for type_supports_size()
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 30;
+our $VERSION = 31;
 
 if (0) {
   # These are the type names as of Gtk 2.20, extend if there's more and
@@ -144,6 +144,7 @@ sub INIT_INSTANCE {
 sub GET_PROPERTY {
   my ($self, $pspec) = @_;
   my $pname = $pspec->get_name;
+  ### ComboBox-PixbufType GET_PROPERTY: $pname
 
   if ($pname eq 'active_type') {
     my $iter;
@@ -157,11 +158,12 @@ sub GET_PROPERTY {
 sub SET_PROPERTY {
   my ($self, $pspec, $newval) = @_;
   my $pname = $pspec->get_name;
-  ### ComboBox-PixbufType SET_PROPERTY: $pname
+  ### ComboBox-PixbufType SET_PROPERTY: $pname, $newval
 
   if ($pname eq 'active_type') {
     # because _COLUMN_TYPE==0
     Gtk2::Ex::ComboBoxBits::set_active_text ($self, $newval);
+    ### active num now: $self->get_active
   } else {
     $self->{$pname} = $newval;
     _update_model($self);
@@ -228,8 +230,8 @@ sub _update_model {
   my ($self) = @_;
   ### PixbufType _update_model()
 
-  my $for_width  = $self->get('for-width');
-  my $for_height = $self->get('for-height');
+  my $for_width  = max (1, $self->get('for-width'));
+  my $for_height = max (1, $self->get('for-height'));
   my @types =
     grep {Gtk2::Ex::PixbufBits::type_supports_size($_,$for_width,$for_height)}
       map {$_->{'name'}}
@@ -254,6 +256,7 @@ sub _update_model {
   my $model = $self->get_model;
   $model->clear;
   foreach my $type (@types) {
+    ### $type
     ### display: $display{$type}
     $model->set ($model->append,
                  _COLUMN_TYPE,    $type,

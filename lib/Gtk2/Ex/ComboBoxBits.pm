@@ -29,7 +29,7 @@ our @EXPORT_OK = qw(set_active_path
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 30;
+our $VERSION = 31;
 
 sub set_active_path {
   my ($combobox, $path) = @_;
@@ -59,6 +59,7 @@ sub set_active_path {
 sub set_active_text {
   my ($combobox, $str) = @_;
   ### ComboBoxBits set_active_text(): $str
+
   if (defined $str && (my $iter = find_text_iter ($combobox, $str))) {
     ### $iter
     $combobox->set_active_iter ($iter);
@@ -71,7 +72,7 @@ sub set_active_text {
       $combobox->set_active (-1);
     }
   }
-  ### active N now: $combobox->get_active
+  ### set_active_text() active num now: $combobox->get_active
 }
 
 sub find_text_iter {
@@ -81,6 +82,7 @@ sub find_text_iter {
   if (my $model = $combobox->get_model) {
     $model->foreach (sub {
                        my ($model, $path, $iter) = @_;
+                       ### get_value: $model->get_value ($iter, 0)
                        if ($str eq $model->get_value ($iter, 0)) {
                          ### found at: $path->to_string
                          $ret = $iter->copy;
@@ -89,6 +91,7 @@ sub find_text_iter {
                        return 0; # continue
                      });
   }
+  ### $ret
   return $ret;
 }
 

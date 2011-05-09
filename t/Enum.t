@@ -32,7 +32,7 @@ require Gtk2::Ex::ComboBox::Enum;
 # VERSION
 
 {
-  my $want_version = 30;
+  my $want_version = 31;
   is ($Gtk2::Ex::ComboBox::Enum::VERSION,
       $want_version,
       'VERSION variable');

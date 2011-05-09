@@ -33,16 +33,14 @@
 # The <child internal-child="combobox"> provides access to the child
 # combobox from the builder spec.  "internal-child" means it's not a new
 # child object created, but a reference to a pre-built one, and the "id" is
-# the name to use to refer to it in the builder spec (if you do refer to
-# it).
+# the name to use to refer to it in the builder spec.  (The syntax is rather
+# unfortunately similar to a new child widget creation, but that's the way
+# Gtk2::Builder works.)
 #
-# The syntax is rather unfortunately similar to a new child widget creation,
-# but that's the way Gtk2::Builder works.
+# The combobox is referred to so as to set a couple of properties: the
+# add-tearoffs option and a tooltip.  A tooltip can also be put on the
+# toolitem itself, and in fact that may be the better place for it.
 #
-# In this case the combobox is referred to so as to set a couple of
-# properties: the add-tearoffs option and a tooltip.  A tooltip can also be
-# put on the toolitem itself, and in fact that may be the better place for
-# it.
 
 use strict;
 use warnings;

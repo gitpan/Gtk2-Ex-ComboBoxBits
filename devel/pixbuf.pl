@@ -35,7 +35,8 @@ $toplevel->signal_connect (destroy => sub { Gtk2->main_quit });
 my $vbox = Gtk2::VBox->new;
 $toplevel->add ($vbox);
 
-my $combo = Gtk2::Ex::ComboBox::PixbufType->new (active_type => 'png',
+my $combo = Gtk2::Ex::ComboBox::PixbufType->new (
+                                                 active_type => 'png',
                                                  for_width => 128,
                                                  for_height => 10,
                                                 );
