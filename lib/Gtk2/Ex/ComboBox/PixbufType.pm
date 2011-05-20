@@ -64,7 +64,7 @@ use Gtk2::Ex::PixbufBits 38;  # v.38 for type_supports_size()
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 31;
+our $VERSION = 32;
 
 if (0) {
   # These are the type names as of Gtk 2.20, extend if there's more and

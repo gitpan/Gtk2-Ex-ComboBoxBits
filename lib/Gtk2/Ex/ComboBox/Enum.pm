@@ -29,7 +29,7 @@ use Gtk2::Ex::ComboBoxBits 5; # v.5 for set_active_text() when no model
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 31;
+our $VERSION = 32;
 
 use Glib::Object::Subclass
   'Gtk2::ComboBox',
@@ -275,7 +275,7 @@ pairs set initial properties per C<< Glib::Object->new >>.
 
 Get or set the C<active-nick> property described below.  C<set_active_nick>
 does nothing if C<$str> is already the active nick, in particular it doesn't
-emit a C<notify> in that case.
+emit a C<notify>.
 
 =back
 
@@ -293,9 +293,9 @@ exists in the new type then it remains selected, possibly on a different
 row.  If the C<active-nick> doesn't exist in the new type then the combobox
 changes to nothing selected.
 
-This property is a C<Glib::Param::GType> when possible, or a
-C<Glib::Param::String> otherwise.  In both cases at the Perl level the value
-is a type name string, but the GType will check a setting really is an enum.
+(This property is a C<Glib::Param::GType> in new enough Glib and Perl-Glib,
+or a C<Glib::Param::String> otherwise.  In both cases it's a type name
+string at the Perl level, but GType checks a setting really is an enum.)
 
 =item C<active-nick> (string or C<undef>, default C<undef>)
 
@@ -317,10 +317,11 @@ for the first value.
 There's no way to set mnemonics for each enum value.  A semi-automatic way
 to pick sensible ones might be good.
 
-The C<enum-type> paramspec C<get_default_value> is not the actual default
-C<undef>.  For the C<GType> case it's C<"Glib::Enum"> instead.
+The C<enum-type> paramspec C<get_default_value> should be C<undef> but is
+not.  For the C<GType> case it's C<"Glib::Enum">, or for the C<String> it's
+an empty C<"">.
 
-    # should be undef, usually isn't
+    # should be undef, but isn't
     $combobox->find_property('enum-type')->get_default_value
 
 =head1 SEE ALSO

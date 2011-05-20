@@ -17,6 +17,9 @@ with Gtk2-Ex-ComboBoxBits.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+Version 32, May 2011
+    - ComboBoxBits new get_active_path()
+
 Version 31, May 2011
     - ComboBox::PixbufType fix for_width,for_height==0 means unrestricted
 

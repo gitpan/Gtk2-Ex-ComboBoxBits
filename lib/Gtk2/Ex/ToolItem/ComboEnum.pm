@@ -26,7 +26,7 @@ use Gtk2::Ex::ComboBox::Enum 5; # v.5 for get_active_nick(),set_active_nick()
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 31;
+our $VERSION = 32;
 
 use Glib::Object::Subclass
   'Gtk2::ToolItem',
@@ -429,9 +429,10 @@ program.
     </object>
 
 The C<internal-child> means C<< <child> >> is not creating a new child
-object, but accessing one already built by the parent.  The
-C<< id="blah_combo" >> part is the name to refer to the child elsewhere in
-the Builder specification, including a later C<< $builder->get_object >>.
+object, but accessing one already built.  The C<< id="blah_combo" >> part is
+the name to refer to the child elsewhere in the Builder specification,
+including a later C<< $builder->get_object >>.  That C<id> be present even
+if unused.
 
 =head1 BUGS
 
@@ -443,7 +444,8 @@ be lost, such as the C<< <accessibility> >> tags.
 
 L<Gtk2::ToolItem>,
 L<Gtk2::Ex::ComboBox::Enum>,
-L<Gtk2::Ex::Menu::EnumRadio>
+L<Gtk2::Ex::Menu::EnumRadio>,
+L<Gtk2::Ex::ToolItem::OverflowToDialog>
 
 =head1 HOME PAGE
 

@@ -22,39 +22,58 @@ use warnings;
 
 use Exporter;
 our @ISA = ('Exporter');
-our @EXPORT_OK = qw(set_active_path
+our @EXPORT_OK = qw(get_active_path
+                    set_active_path
                     set_active_text
                     find_text_iter);
 
 # uncomment this to run the ### lines
 #use Smart::Comments;
 
-our $VERSION = 31;
+our $VERSION = 32;
+
+#------------------------------------------------------------------------------
+
+sub get_active_path {
+  my ($combobox) = @_;
+  my ($model, $iter);
+  return (($model = $combobox->get_model)
+          && ($iter = $combobox->get_active_iter)
+          && $model->get_path ($combobox->get_active_iter));
+}
 
 sub set_active_path {
   my ($combobox, $path) = @_;
-  my $n = -1;
+  ### set_active_path()
 
   # Non-existent rows go to set_active(-1) since the Perl-Gtk2
   # set_active_iter() doesn't accept undef (NULL) until 1.240.
   # If ready to demand that version could
-  #     $combobox->set_active_iter ($model->get_iter($path));
-  # when there's a model
+  #   $combobox->set_active_iter ($model && $path && $model->get_iter($path));
 
   if ($path) {
     if ($path->get_depth == 1) {
       # top-level row using set_active()
-      ($n) = $path->get_indices;
+      $combobox->set_active ($path->get_indices);
+      return;
+    }
 
-    } elsif (my $model = $combobox->get_model) {
+    if (my $model = $combobox->get_model) {
       if (my $iter = $model->get_iter($path)) {
         $combobox->set_active_iter ($iter);
         return;
       }
     }
   }
-  $combobox->set_active ($n);
+  # path=undef, or no model, or path not in model
+  # FIXME: ->set_active(-1) spits a warning in gtk 2.28 if no model,
+  # want Gtk2 1.240 for ->set_active_iter(undef)
+  if ($combobox->get_model) {
+    $combobox->set_active (-1);
+  }
 }
+
+#------------------------------------------------------------------------------
 
 sub set_active_text {
   my ($combobox, $str) = @_;
@@ -136,7 +155,14 @@ Gtk2::Ex::ComboBoxBits -- misc Gtk2::ComboBox helpers
 
 =head1 FUNCTIONS
 
+=head2 Active Path
+
 =over
+
+=item C<< $path = Gtk2::Ex::ComboBoxBits::get_active_path ($combobox) >>
+
+Return a C<Gtk2::TreePath> to the active item in C<$combobox>, or C<undef>
+if empty or no model or nothing active.
 
 =item C<< Gtk2::Ex::ComboBoxBits::set_active_path ($combobox, $path) >>
 
@@ -144,17 +170,28 @@ Set the active item in C<$combobox> to the given C<Gtk2::TreePath>
 position.  If C<$path> is empty or C<undef> or there's no such row in the
 model then C<$combobox> is set to nothing active.
 
-If there's no model in C<$combobox> then a toplevel path is remembered ready
-for a model set later, the same as the native C<set_active>.  But sub-rows
-don't enjoy the same remembering.
+Some versions of ComboBox have a feature where if there's no model in
+C<$combobox> then a toplevel active item is remembered ready for a model set
+later.  Not sure if that's documented, but C<set_active_path> tries to
+cooperate by using C<set_active> for toplevels, and C<set_active_iter> for
+sub-rows (which don't get the same remembering).
+
+=back
+
+=head2 Text Combos
+
+The following are for use on a simplified "text" ComboBox as created by
+C<< Gtk2::ComboBox->new_text() >>.
+
+=over
 
 =item C<< $str = Gtk2::Ex::ComboBoxBits::set_active_text ($combobox, $str) >>
 
 C<$combobox> must be a simplified "text" type ComboBox.  Set the entry
 C<$str> active.
 
-(As of Gtk 2.20 ComboBox has a C<get_active_text>, but no C<set_active_text>
-nor a corresponding property.)
+The corresponding "get" is C<< $combobox->get_active_text() >>, see
+L<Gtk2::ComboBox>.
 
 =item C<< $iter = Gtk2::Ex::ComboBoxBits::find_text_iter ($combobox, $str) >>
 

@@ -40,7 +40,7 @@ require Gtk2::Ex::ComboBox::PixbufType;
 #------------------------------------------------------------------------------
 # VERSION
 
-my $want_version = 31;
+my $want_version = 32;
 {
   is ($Gtk2::Ex::ComboBox::PixbufType::VERSION,
       $want_version,
